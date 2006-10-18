@@ -145,12 +145,12 @@ case url
 end
 
 puts  target
-if system('which wget')
+if (ENV.has_key?('OS') && File.exists?('C:\WINDOWS\wget.exe')) || system('which wget')
   print "Download the movie (using wget) now? [Y/n] "
   exit unless $stdin.gets.chomp =~ /^Y/i
     system("wget \"#{target}\" -O \"#{name + suffix}\"")
 
-  if convert && system('which ffmpeg')
+  if convert && ( (ENV.has_key?('OS') && File.exists?('C:\WINDOWS\ffmpeg.exe')) || system('which ffmpeg') )
     print "Convert the flv movie to avi (using ffmpeg) now? [Y/n] "
     if $stdin.gets.chomp =~ /^Y/i
       system("ffmpeg -i #{name + suffix} -vcodec mpeg4 -acodec mp3 #{name}.avi")
