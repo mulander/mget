@@ -100,13 +100,16 @@ def smog_get(url)
   end
 end
 
-url    = ARGV[0]
-name   = ARGV[1]
-suffix = '.'
-target = ''
+url        = ARGV[0]
+name       = ARGV[1]
+scriptName = $0
+suffix     = '.'
+target     = ''
+
+scriptName.gsub!(/\.rb$/,'') if ENV.has_key?('OS')
 
 if url.nil? || url !~ /^http:\/\// || name.nil?
- puts "Usage:   mget url name"
+ puts "Usage:   #{ scriptName } url name"
  puts "url      - a valid google video, youtube, vids.myspace, smog.pl, patrz.pl or metacafe movie link"
  puts "filename - name used to save the file, without the extension"
  exit
