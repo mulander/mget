@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -w
-# v0.05
+# v0.07
 #
 # Copyright (C) 2006 Adam Wolk "mulander" <netprobe@gmail.com>
 #                                "defc0n" <defc0n@da-mail.net>
@@ -153,7 +153,7 @@ if (ENV.has_key?('OS') && File.exists?('C:\WINDOWS\wget.exe')) || system('which 
   if convert && ( (ENV.has_key?('OS') && File.exists?('C:\WINDOWS\ffmpeg.exe')) || system('which ffmpeg') )
     print "Convert the flv movie to avi (using ffmpeg) now? [Y/n] "
     if $stdin.gets.chomp =~ /^Y/i
-      system("ffmpeg -i #{name + suffix} -vcodec mpeg4 -acodec mp3 #{name}.avi")
+      system("ffmpeg -i #{name + suffix} #{name}.mpg")
       print "Delete the flv movie now? [Y/n] "
       File.delete(name + suffix) if $stdin.gets.chomp =~ /^Y/i
     end
