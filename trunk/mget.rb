@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -w
-# v0.07
+# v0.08
 #
 # Copyright (C) 2006 Adam Wolk "mulander" <netprobe@gmail.com>
 #                                "defc0n" <defc0n@da-mail.net>
@@ -106,7 +106,7 @@ suffix = '.'
 target = ''
 
 if url.nil? || url !~ /^http:\/\// || name.nil?
- puts "Usage:   #{$0} url name"
+ puts "Usage:   mget url name"
  puts "url      - a valid google video, youtube, vids.myspace, smog.pl, patrz.pl or metacafe movie link"
  puts "filename - name used to save the file, without the extension"
  exit
@@ -145,12 +145,12 @@ case url
 end
 
 puts  target
-if (ENV.has_key?('OS') && File.exists?('C:\WINDOWS\wget.exe')) || system('which wget')
+if (ENV.has_key?('OS') && File.exists?(ENV['SystemRoot'] + '\wget.exe')) || system('which wget')
   print "Download the movie (using wget) now? [Y/n] "
   exit unless $stdin.gets.chomp =~ /^Y/i
     system("wget \"#{target}\" -O \"#{name + suffix}\"")
 
-  if convert && ( (ENV.has_key?('OS') && File.exists?('C:\WINDOWS\ffmpeg.exe')) || system('which ffmpeg') )
+  if convert && ( (ENV.has_key?('OS') && File.exists?(ENV['SystemRoot'] + '\ffmpeg.exe')) || system('which ffmpeg') )
     print "Convert the flv movie to avi (using ffmpeg) now? [Y/n] "
     if $stdin.gets.chomp =~ /^Y/i
       system("ffmpeg -i #{name + suffix} #{name}.mpg")
@@ -164,3 +164,4 @@ if (ENV.has_key?('OS') && File.exists?('C:\WINDOWS\wget.exe')) || system('which 
 else
   print "If you want to download movies, you must install wget (http://www.gnu.org/software/wget/)\n"
 end
+
