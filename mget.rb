@@ -20,76 +20,6 @@
 
 $LOAD_PATH.push('lib')
 
-require 'youtube'
-
-def meta_get(url)
-  if url =~ /\/watch\/(.*)\//
-    id = $1
-  end
-
-  open("http://www.metacafe.com/fplayer.php?playerType=Portal&flashVideoPlayerVersion=3.0&itemID=" + id) do |f|
-    f.each_line do |line|
-      if line =~ /mediaURL=\"(http:\/\/.+?\.flv)\"/
-        out = $1
-        out.gsub!(/\%5B/, "[")
-        out.gsub!(/\%20/, " ")
-        out.gsub!(/\%5D/, "]")
-        return out
-      end
-    end
-  end
-end
-
-def google_get(url)
-  open(url) do |f|
-    f.each_line do |line|
-      if line =~ /(http%3A%2F%2Fvp.video.google.com%2Fvideodownload%3Fversion.*)&messagesUrl/
-        out = $1
-        out.gsub!(/\%3A/, ":")
-        out.gsub!(/\%2F/, "/")
-        out.gsub!(/\%3F/, "?")
-        out.gsub!(/\%3D/, "=")
-        out.gsub!(/\%26/, "&")
-        return out
-      end
-    end
-  end
-end
-
-def myspace_get(url)
-  id = 0
-  if url =~ /videoID=(\d{10})/
-    id = $1.to_s
-  else
-    print "Invalid myspace link, are you sure you copied it correctly?\n"
-    exit
-  end
-  return 'http://content.movies.myspace.com/00' + id[0..4] \
-  						+ '/' + id[-2..-1].reverse \
-						+ '/' + id[-4 .. -3].reverse \
-						+ '/' + id + '.flv'
-end
-
-def patrz_get(url)
-  open(url) do |f|
-    f.each_line do |line|
-      if line =~ /src="http:\/\/www(\d)\.patrz\.pl\/player\/patrzplayer\.swf\?file=(\d{5})&amp;typ=(\d)&amp;server=(\d)/
-        return 'http://www' + $4 + '.patrz.pl/uplx/5flv/' + $2 + '.flv'
-      end
-    end
-  end
-end
-
-def smog_get(url)
-  open(url) do |f|
-    f.each_line do |line|
-      if line =~ /src="http:\/\/www\.wrzuta\.pl\/wrzuta_embed\.js\?wrzuta_key=.+?&wrzuta_flv=(http:\/\/www\.wrzuta\.pl\/vid\/file\/.+?\/.+?)&/
-        return $1
-      end
-    end
-  end
-end
-
 url         = ARGV[0]
 name        = ARGV[1]
 scriptName  = $0
@@ -108,37 +38,35 @@ if url.nil? || url !~ /^http:\/\// || name.nil?
 end
 
 convert = false
+movie   = nil
 
 case url
   when /youtube/
-    movie  = Youtube.new(url, youtube)
-    target = movie.get()
-    suffix += 'flv'
-    convert = true
+    require 'youtube'
+    movie   = Youtube.new(url, youtube)
   when /metacafe/
-    target = meta_get(url)
-    suffix += 'flv'
-    convert = true
+    require 'meta_cafe'
+    movie   = MetaCafe.new(url,nil)
   when /google/
-    target = google_get(url)
-    suffix += 'flv'
-    convert = true
+    require 'google'
+    movie   = Google.new(url,nil)
   when /vids\.myspace/
-    target = myspace_get(url)
-    suffix += 'flv'
-    convert = true
+    require 'my_space'
+    movie   = MySpace.new(url,nil)
   when /patrz/
-    target = patrz_get(url)
-    suffix += 'flv'
-    convert = true
+    require 'patrz'
+    movie   = Patrz.new(url,nil)
   when /smog/
-    target = smog_get(url)
-    suffix += 'flv'
-    convert = true
+    require 'smog'
+    movie   = Smog.new(url,nil)
   else
     print "Unsupported site: #{url}"
     exit
 end
+
+target  = movie.get()
+suffix  = movie.suffix()
+convert = true if suffix == 'flv'
 
 puts  target
 if (ENV.has_key?('OS') && File.exists?(ENV['SystemRoot'] + '\wget.exe')) || system('which wget')
