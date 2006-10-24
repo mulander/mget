@@ -3,13 +3,20 @@ require 'net/http'
 require 'uri'
 
 class MovieSite
+  attr_reader :suffix
   def initialize(url,config)
     @url      = url
     @cookie   = ''
     @loggedIn = false
+    @suffix   = 'flv'
     @useragent= 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111'
-    @username = config['username']
-    @password = config['password']
+    unless config.nil?
+      @username = config['username']
+      @password = config['password']
+    else
+      @username = nil
+      @password = nil
+    end
   end
   
   private
