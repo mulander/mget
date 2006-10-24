@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -w
-# v0.08
+# v0.09
 #
 # Copyright (C) 2006 Adam Wolk "mulander" <netprobe@gmail.com>
 #                                "defc0n" <defc0n@da-mail.net>
@@ -18,19 +18,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'open-uri'
+$LOAD_PATH.push('lib')
 
-def youtube_get(url)
-  id = ''
-  open(url) do |f|
-    f.each_line do |line|
-        if line =~ /embed src="(http:\/\/.+?)"/
-	  open($1) { |d| id = d.base_uri.to_s.scan(/.+video_id=(.+)/) }
-  	  return "http://youtube.com/get_video.php?video_id=#{id}"
-        end
-      end
-    end
-end
+require 'youtube'
 
 def meta_get(url)
   if url =~ /\/watch\/(.*)\//
@@ -100,11 +90,13 @@ def smog_get(url)
   end
 end
 
-url        = ARGV[0]
-name       = ARGV[1]
-scriptName = $0
-suffix     = '.'
-target     = ''
+url         = ARGV[0]
+name        = ARGV[1]
+scriptName  = $0
+suffix      = '.'
+target      = ''
+
+youtube     = { 'username' => '', 'password' => '' }
 
 scriptName = 'mget' if ENV.has_key?('OS')
 
@@ -119,7 +111,8 @@ convert = false
 
 case url
   when /youtube/
-    target = youtube_get(url)
+    movie  = Youtube.new(url, youtube)
+    target = movie.get()
     suffix += 'flv'
     convert = true
   when /metacafe/
