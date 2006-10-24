@@ -42,22 +42,22 @@ movie   = nil
 
 case url
   when /youtube/
-    require 'youtube'
+    require 'mget/youtube'
     movie   = Youtube.new(url, youtube)
   when /metacafe/
-    require 'meta_cafe'
+    require 'mget/meta_cafe'
     movie   = MetaCafe.new(url,nil)
   when /google/
-    require 'google'
+    require 'mget/google'
     movie   = Google.new(url,nil)
   when /vids\.myspace/
-    require 'my_space'
+    require 'mget/my_space'
     movie   = MySpace.new(url,nil)
   when /patrz/
-    require 'patrz'
+    require 'mget/patrz'
     movie   = Patrz.new(url,nil)
   when /smog/
-    require 'smog'
+    require 'mget/smog'
     movie   = Smog.new(url,nil)
   else
     print "Unsupported site: #{url}"

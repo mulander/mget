@@ -17,22 +17,16 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'movie_site'
+require 'mget/movie_site'
 
-class Google < MovieSite
-    def get()
-      open(@url) do |f|
-        f.each_line do |line|
-          if line =~ /(http%3A%2F%2Fvp.video.google.com%2Fvideodownload%3Fversion.*)&messagesUrl/
-            out = $1
-            out.gsub!(/\%3A/, ":")
-            out.gsub!(/\%2F/, "/")
-            out.gsub!(/\%3F/, "?")
-            out.gsub!(/\%3D/, "=")
-            out.gsub!(/\%26/, "&")
-            return out
-          end
+class Patrz < MovieSite
+  def get()
+    open(@url) do |f|
+      f.each_line do |line|
+        if line =~ /src="http:\/\/www(\d)\.patrz\.pl\/player\/patrzplayer\.swf\?file=(\d{5})&amp;typ=(\d)&amp;server=(\d)/
+          return 'http://www' + $4 + '.patrz.pl/uplx/5flv/' + $2 + '.flv'
         end
       end
     end
+  end
 end

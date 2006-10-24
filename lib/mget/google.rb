@@ -17,24 +17,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'movie_site'
+require 'mget/movie_site'
 
-class MetaCafe < MovieSite
-  def get()
-    if @url =~ /\/watch\/(.*)\//
-      id = $1
-    end
-
-    open("http://www.metacafe.com/fplayer.php?playerType=Portal&flashVideoPlayerVersion=3.0&itemID=" + id) do |f|
-      f.each_line do |line|
-        if line =~ /mediaURL=\"(http:\/\/.+?\.flv)\"/
-          out = $1
-          out.gsub!(/\%5B/, "[")
-          out.gsub!(/\%20/, " ")
-          out.gsub!(/\%5D/, "]")
-          return out
+class Google < MovieSite
+    def get()
+      open(@url) do |f|
+        f.each_line do |line|
+          if line =~ /(http%3A%2F%2Fvp.video.google.com%2Fvideodownload%3Fversion.*)&messagesUrl/
+            out = $1
+            out.gsub!(/\%3A/, ":")
+            out.gsub!(/\%2F/, "/")
+            out.gsub!(/\%3F/, "?")
+            out.gsub!(/\%3D/, "=")
+            out.gsub!(/\%26/, "&")
+            return out
+          end
         end
       end
     end
-  end
 end
