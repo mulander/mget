@@ -106,7 +106,7 @@ scriptName = $0
 suffix     = '.'
 target     = ''
 
-scriptName.gsub!(/\.rb$/,'') if ENV.has_key?('OS')
+scriptName = 'mget' if ENV.has_key?('OS')
 
 if url.nil? || url !~ /^http:\/\// || name.nil?
  puts "Usage:   #{ scriptName } url name"
@@ -154,7 +154,7 @@ if (ENV.has_key?('OS') && File.exists?(ENV['SystemRoot'] + '\wget.exe')) || syst
     system("wget \"#{target}\" -O \"#{name + suffix}\"")
 
   if convert && ( (ENV.has_key?('OS') && File.exists?(ENV['SystemRoot'] + '\ffmpeg.exe')) || system('which ffmpeg') )
-    print "Convert the flv movie to avi (using ffmpeg) now? [Y/n] "
+    print "Convert the flv movie to mpg (using ffmpeg) now? [Y/n] "
     if $stdin.gets.chomp =~ /^Y/i
       system("ffmpeg -i #{name + suffix} #{name}.mpg")
       print "Delete the flv movie now? [Y/n] "
