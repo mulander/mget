@@ -17,20 +17,16 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'movie_site'
+require 'mget/movie_site'
 
-class MySpace < MovieSite
+class Smog < MovieSite
   def get()
-    id = 0
-    if @url =~ /videoID=(\d{10})/i
-      id = $1.to_s
-    else
-      print "Invalid myspace link, are you sure you copied it correctly?\n"
-      exit
+    open(@url) do |f|
+      f.each_line do |line|
+        if line =~ /src="http:\/\/www\.wrzuta\.pl\/wrzuta_embed\.js\?wrzuta_key=.+?&wrzuta_flv=(http:\/\/www\.wrzuta\.pl\/vid\/file\/.+?\/.+?)&/
+          return $1
+        end
+      end
     end
-    return 'http://content.movies.myspace.com/00' + id[0..4] \
-    						+ '/' + id[-2..-1].reverse \
-  	     					+ '/' + id[-4 .. -3].reverse \
-		    				+ '/' + id + '.flv'
   end
 end

@@ -17,14 +17,22 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'movie_site'
+require 'mget/movie_site'
 
-class Smog < MovieSite
-  def get() # FIXME - doesn't work if url contains PL chars
-    open(@url) do |f|
+class MetaCafe < MovieSite
+  def get()
+    if @url =~ /\/watch\/(.*)\//
+      id = $1
+    end
+
+    open("http://www.metacafe.com/fplayer.php?playerType=Portal&flashVideoPlayerVersion=3.0&itemID=" + id) do |f|
       f.each_line do |line|
-        if line =~ /src="http:\/\/www\.wrzuta\.pl\/wrzuta_embed\.js\?wrzuta_key=.+?&wrzuta_flv=(http:\/\/www\.wrzuta\.pl\/vid\/file\/.+?\/.+?)&/
-          return $1
+        if line =~ /mediaURL=\"(http:\/\/.+?\.flv)\"/
+          out = $1
+          out.gsub!(/\%5B/, "[")
+          out.gsub!(/\%20/, " ")
+          out.gsub!(/\%5D/, "]")
+          return out
         end
       end
     end
