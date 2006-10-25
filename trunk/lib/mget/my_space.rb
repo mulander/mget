@@ -25,8 +25,8 @@ class MySpace < MovieSite
     if @url =~ /videoID=(\d{10})/i
       id = $1.to_s
     else
-      print "Invalid myspace link, are you sure you copied it correctly?\n"
-      exit
+      setError("Invalid myspace link, are you sure you copied it correctly?\n")
+      return nil
     end
     return 'http://content.movies.myspace.com/00' + id[0..4] \
     						+ '/' + id[-2..-1].reverse \
