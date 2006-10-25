@@ -17,13 +17,17 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+require 'mget/error_handling'
 require 'open-uri'
 require 'net/http'
 require 'uri'
 
 class MovieSite
+  include ErrorHandling
   attr_reader :suffix
   def initialize(url,config)
+    @log = Logger.new(self.class.to_s + '.log')
+    @error    = nil
     @url      = url
     @cookie   = ''
     @loggedIn = false
@@ -39,7 +43,6 @@ class MovieSite
   end
   
   private
-  
   def passwordSet?
     return (@password.nil? || @password.empty?) ? false : true
   end

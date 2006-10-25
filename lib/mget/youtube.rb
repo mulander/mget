@@ -26,11 +26,12 @@ class Youtube < MovieSite
       @base  = 'youtube.com'
       @watch = $1
     else
-      raise ArgumentError("Invalid Youtube link")
+      setError("Invalid Youtube link")
     end
   end
   
   def get()
+    return if error?
     id = ''
     open(@url,{'Cookie' => @cookie, 'User-Agent' => @useragent}) do |f|
       if adult?(f.base_uri.to_s)
