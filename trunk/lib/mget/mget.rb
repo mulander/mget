@@ -188,7 +188,7 @@ private
     if dirInfo.length.zero?
       @name = @saveDir + '0'*6
     else
-      @name = dirInfo.map { |e| e.gsub(/\..{3}/,'') }.uniq.max.succ
+      @name = dirInfo.map { |e| e.gsub(/\..{3}$/,'') }.uniq.max.succ
     end
   end  
 end
