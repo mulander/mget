@@ -1,19 +1,21 @@
 #!/usr/bin/ruby -w
 
 class Mget
-  
   def initialize()
     @name     = nil
     @suffix   = '.'
     @convert  = false
     @fromFile = false
-    `which wget`
-    @wget   = ((ENV.has_key?('OS') && File.exists?(ENV['SystemRoot'] + '\wget.exe')) \
-            || $?.exitstatus )? true : false
-    
-    `which ffmpeg`
-    @ffmpeg = ( (ENV.has_key?('OS') && File.exists?(ENV['SystemRoot'] + '\ffmpeg.exe')) \
-            || $?.exitstatus )? true : false
+
+    if ENV.has_key?('OS')
+      @wget   = File.exists?(ENV['SystemRoot'] + '\wget.exe')
+      @ffmpeg = File.exists?(ENV['SystemRoot'] + '\ffmpeg.exe')
+    else
+      `which wget`
+      @wget   = ($?.exitstatus == 0)
+      `which ffmpeg`
+      @ffmpeg = ($?.exitstatus == 0)
+    end
             
     print "[*] If you want to download movies, you must install" + \
           " wget (http://www.gnu.org/software/wget/)\n" unless @wget
