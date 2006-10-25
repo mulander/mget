@@ -167,11 +167,9 @@ private
   def download()
     Dir.mkdir(@saveDir) unless File.exists?(@saveDir) && File.directory?(@saveDir)
     getName() if @name.nil? || @name.empty? || @fromFile
-    puts ">>>#@name"
     print "Download the movie (using wget) now? [Y/n] "
     exit unless $stdin.gets.chomp =~ /^Y/i
     system("wget \"#{@target}\" -O \"#{ @saveDir }/#{ @name + @suffix}\"")
-    convert()
   end
   
   def convert()
