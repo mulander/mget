@@ -32,9 +32,13 @@ class Mget
 end
 
 opts = GetoptLong.new(
-  ["--help","-h",   GetoptLong::NO_ARGUMENT],
-  ["--name","-n",   GetoptLong::REQUIRED_ARGUMENT],
-  ["--input","-i",  GetoptLong::REQUIRED_ARGUMENT]
+  ["--help","-h",       GetoptLong::NO_ARGUMENT],
+  ["--name","-n",       GetoptLong::REQUIRED_ARGUMENT],
+  ["--input","-i",      GetoptLong::REQUIRED_ARGUMENT],
+  ["--download","-d",   GetoptLong::NO_ARGUMENT],
+  ["--nodownload","-D", GetoptLong::NO_ARGUMENT],
+  ["--convert","-c",    GetoptLong::NO_ARGUMENT],
+  ["--noconvert","-C",  GetoptLong::NO_ARGUMENT]
 )
 
 opts.ordering = GetoptLong::REQUIRE_ORDER
@@ -49,6 +53,14 @@ opts.each do |opt, arg|
       mget.name   = arg
     when '--input'
       mget.input  = arg
+    when '--download'
+      mget.download = true
+    when '--nodownload'
+      mget.download = false
+    when '--convert'
+      mget.convert  = true
+    when '--noconvert'
+      mget.convert  = false
   end
 end
 
