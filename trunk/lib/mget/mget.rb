@@ -23,8 +23,9 @@ require 'mget/error_handling'
 
 class Mget
   include ErrorHandling
-  attr_writer :show
+  attr_writer :show, :quiet
   def initialize()
+    @quiet      = false
     @download   = nil
     @convert    = nil
     @log        = Logger.new('mget.log')
@@ -138,6 +139,7 @@ class Mget
     puts "--convert,    -c    - convert all downloaded and convertable files (also sets -d)"
     puts "--noconvert,  -C    - don't convert any files"
     puts "--show,       -s    - show direct download link for the video"
+    puts "--quiet,      -q    - hides output from wget"
     exit
   end
 
@@ -207,16 +209,17 @@ private
   
   def download()
     return if @download == false
+    flag  = (@quiet) ? '-q ' : ''
     Dir.mkdir(@saveDir) unless File.exists?(@saveDir) && File.directory?(@saveDir)
     getName() if @name.nil? || @name.empty? || @fromFile
     unless @download
       print "Download the movie (using wget) now? [Y/n] "
-      unless $stdin.gets.chomp =~ /^Y/i
+      unless $stdin.gets.chomp =~ /^\s*Y|\s*$/i
         @skipped += 1
         return false
       end
     end
-    system("wget \"#{@target}\" -O \"#{ @saveDir }/#{ @name + @suffix}\"")
+    system("wget #{ flag }\"#{@target}\" -O \"#{ @saveDir }/#{ @name + @suffix}\"")
     @downloaded += 1
     return true
   end
@@ -226,12 +229,12 @@ private
     return unless @convertable
     unless @convert
       print "Convert the flv movie to mpg (using ffmpeg) now? [Y/n] "
-      return false if $stdin.gets.chomp =~ /^Y/i
+      return false if $stdin.gets.chomp =~ /^\s*Y|\s*$/i
     end
       system("ffmpeg -i #{ @saveDir }/#{@name + @suffix} #{ @saveDir }/#@name.mpg")
       @converted += 1
       print "Delete the flv movie now? [Y/n] "
-      File.delete(name + suffix) if $stdin.gets.chomp =~ /^Y/i
+      File.delete(name + suffix) if $stdin.gets.chomp =~ /^\s*Y|\s*$/i
   end
 
   def getName()
