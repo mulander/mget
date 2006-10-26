@@ -38,7 +38,8 @@ opts = GetoptLong.new(
   ["--download","-d",   GetoptLong::NO_ARGUMENT],
   ["--nodownload","-D", GetoptLong::NO_ARGUMENT],
   ["--convert","-c",    GetoptLong::NO_ARGUMENT],
-  ["--noconvert","-C",  GetoptLong::NO_ARGUMENT]
+  ["--noconvert","-C",  GetoptLong::NO_ARGUMENT],
+  ["--show","-s",       GetoptLong::NO_ARGUMENT]
 )
 
 opts.ordering = GetoptLong::REQUIRE_ORDER
@@ -57,10 +58,13 @@ opts.each do |opt, arg|
       mget.download = true
     when '--nodownload'
       mget.download = false
+      mget.show     = true
     when '--convert'
       mget.convert  = true
     when '--noconvert'
       mget.convert  = false
+    when '--show'
+      mget.show     = true
   end
 end
 

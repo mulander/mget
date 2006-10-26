@@ -23,6 +23,7 @@ require 'mget/error_handling'
 
 class Mget
   include ErrorHandling
+  attr_writer :show
   def initialize()
     @download   = nil
     @convert    = nil
@@ -30,6 +31,7 @@ class Mget
     @name       = nil
     @suffix     = '.'
     @fromFile   = false
+    @show       = false
     @ok         = 0
     @fail       = 0
     @skipped    = 0
@@ -135,6 +137,7 @@ class Mget
     puts "--nodownload, -D    - don't download any files (also sets -C)"
     puts "--convert,    -c    - convert all downloaded and convertable files (also sets -d)"
     puts "--noconvert,  -C    - don't convert any files"
+    puts "--show,       -s    - show direct download link for the video"
     exit
   end
 
@@ -179,7 +182,7 @@ private
     @suffix  += movie.suffix()
     @saveDir  = movie.class.to_s
     @convertable  = true if @suffix == '.flv'
-    puts  @target
+    puts  @target if @show
     convert() if download()
     @ok += 1
   end
