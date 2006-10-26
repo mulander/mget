@@ -8,19 +8,19 @@ module ErrorHandling
   
 private
   def setError(string)
-    @error = "[!]" + string
+    @error = "[!] " + string
     puts @error
     @log.error(string)
   end
   
   def setWarning(string)
-    @warn = "[*]" + string
+    @warn = "[*] " + string
     puts @warn
     @log.warn(string)
   end
   
   def setInfo(string)
-    @info = "[?]" + string
+    @info = "[?] " + string
     puts @info
     @log.info(string)
   end

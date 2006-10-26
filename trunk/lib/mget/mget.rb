@@ -88,7 +88,7 @@ class Mget
       setWarning("--name ignored because of --input")
       return
     elsif File.exists? saveName
-      setWarning("[*] File already exists: #{ saveName }")
+      setWarning("File already exists: #{ saveName }")
       exit
     else
       @name = saveName
@@ -99,18 +99,18 @@ class Mget
   def input=(fileName)
     if File.exists? fileName
       if File.zero? fileName
-        setError("[*] File is empty: #{ fileName }")
+        setError("File is empty: #{ fileName }")
         exit
       else
         unless @name.nil? || @name.empty?
-          setWarning("[*] --name ignored because of --input")
+          setWarning("--name ignored because of --input")
           @name   = nil
         end
         @fromFile = true
         @input    = fileName
       end
     else
-      setError("[*] File does not exist: #{ fileName }")
+      setError("File does not exist: #{ fileName }")
       exit
     end
   end
@@ -177,7 +177,7 @@ private
         require 'mget/wrzuta'
         movie   = Wrzuta.new(@target,nil)
       else
-        setError("[*] Unsupported site: #{@target}")
+        setError("Unsupported site: #{@target}")
         exit
     end
     @target   = movie.get()
