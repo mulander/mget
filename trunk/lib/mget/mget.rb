@@ -24,15 +24,19 @@ require 'mget/error_handling'
 class Mget
   include ErrorHandling
   def initialize()
-    @log      = Logger.new('mget.log')
-    @name     = nil
-    @suffix   = '.'
-    @convert  = false
-    @fromFile = false
-    @ok       = 0
-    @fail     = 0
-    @total    = 0
-
+    @download   = nil
+    @convert    = nil
+    @log        = Logger.new('mget.log')
+    @name       = nil
+    @suffix     = '.'
+    @fromFile   = false
+    @ok         = 0
+    @fail       = 0
+    @skipped    = 0
+    @total      = 0
+    @downloaded = 0
+    @convertable  = false
+    
     if ENV.has_key?('OS')
       @wget   = File.exists?(ENV['SystemRoot'] + '\wget.exe')
       @ffmpeg = File.exists?(ENV['SystemRoot'] + '\ffmpeg.exe')
@@ -62,6 +66,18 @@ class Mget
     else
       @target = target
     end
+  end
+  
+  def download=(flag)
+    return unless @download.nil?
+    @download = flag
+    @convert  = false unless @download
+  end
+  
+  def convert=(flag)
+    return unless @convert.nil?
+    @convert  = flag
+    @download = true if @convert
   end
   
   def name=(saveName)
@@ -112,9 +128,13 @@ class Mget
     scriptName  = $0
     scriptName = 'mget' if ENV.has_key?('OS')
     puts "Usage:   #{ scriptName } [options] url"
-    puts "url           - a valid google video, youtube, vids.myspace, smog.pl, patrz.pl or metacafe movie link"
-    puts "--name,   -n  - name used to save the file, without the extension"
-    puts "--input,  -i  - read links from file"
+    puts "url                 - a valid google video, youtube, vids.myspace, smog.pl, patrz.pl or metacafe movie link"
+    puts "--name,       -n    - name used to save the file, without the extension"
+    puts "--input,      -i    - read links from file"
+    puts "--download,   -d    - download files without asking"
+    puts "--nodownload, -D    - don't download any files (also sets -C)"
+    puts "--convert,    -c    - convert all downloaded and convertable files (also sets -d)"
+    puts "--noconvert,  -C    - don't convert any files"
     exit
   end
 
@@ -158,10 +178,9 @@ private
     
     @suffix  += movie.suffix()
     @saveDir  = movie.class.to_s
-    @convert  = true if @suffix == '.flv'
+    @convertable  = true if @suffix == '.flv'
     puts  @target
-    download()
-    convert()
+    convert() if download()
     @ok += 1
   end
   
@@ -184,22 +203,32 @@ private
   end
   
   def download()
+    return if @download == false
     Dir.mkdir(@saveDir) unless File.exists?(@saveDir) && File.directory?(@saveDir)
     getName() if @name.nil? || @name.empty? || @fromFile
-    print "Download the movie (using wget) now? [Y/n] "
-    exit unless $stdin.gets.chomp =~ /^Y/i
+    unless @download
+      print "Download the movie (using wget) now? [Y/n] "
+      unless $stdin.gets.chomp =~ /^Y/i
+        @skipped += 1
+        return false
+      end
+    end
     system("wget \"#{@target}\" -O \"#{ @saveDir }/#{ @name + @suffix}\"")
+    @downloaded += 1
+    return true
   end
   
   def convert()
-    return if @name.nil? || @name.empty? # FIXME - related to download()
-    return unless @convert
-    print "Convert the flv movie to mpg (using ffmpeg) now? [Y/n] "
-    if $stdin.gets.chomp =~ /^Y/i
+    return if @convert  == false
+    return unless @convertable
+    unless @convert
+      print "Convert the flv movie to mpg (using ffmpeg) now? [Y/n] "
+      return false if $stdin.gets.chomp =~ /^Y/i
+    end
       system("ffmpeg -i #{ @saveDir }/#{@name + @suffix} #{ @saveDir }/#@name.mpg")
+      @converted += 1
       print "Delete the flv movie now? [Y/n] "
       File.delete(name + suffix) if $stdin.gets.chomp =~ /^Y/i
-    end
   end
 
   def getName()
