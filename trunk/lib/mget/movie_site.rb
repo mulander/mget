@@ -31,7 +31,7 @@ class MovieSite
     @url      = url
     @cookie   = ''
     @loggedIn = false
-    @suffix   = 'flv'
+    @suffix   = '.flv'
     @useragent= 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111'
     unless config.nil?
       @username = config['username']

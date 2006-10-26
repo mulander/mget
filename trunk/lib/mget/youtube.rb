@@ -20,8 +20,11 @@
 require 'mget/movie_site'
 
 class Youtube < MovieSite
+  @@cookieSet = false
+  @@cookieMem = ''
   def initialize(url,config)
     super(url,config)
+    @cookie = @@cookieMem if @@cookieSet
     if @url =~ /(\/watch.+)/
       @base  = 'youtube.com'
       @watch = $1
@@ -68,7 +71,7 @@ class Youtube < MovieSite
       when '200'
         @username = ''
         @password = ''
-        puts "[*] Invalid username or password"
+        setWarning("Invalid username or password")
         return false
       end
   end
@@ -82,6 +85,8 @@ class Youtube < MovieSite
     http    =   Net::HTTP.new(@base,80)
     res     =   http.post(@confirm, data, headers)
     @cookie +=  ' ' + res['set-cookie'].split(' ').find { |p| p =~ /is_adult/ }
+    @@cookieMem = @cookie
+    @@cookieSet = true
   end
   
   def adult?(url)

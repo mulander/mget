@@ -30,7 +30,6 @@ class Mget
     @convert    = nil
     @log        = Logger.new('mget.log')
     @name       = nil
-    @suffix     = '.'
     @fromFile   = false
     @show       = false
     @ok         = 0
@@ -38,6 +37,7 @@ class Mget
     @skipped    = 0
     @total      = 0
     @downloaded = 0
+    @converted  = 0
     @convertable  = false
     
     if ENV.has_key?('OS')
@@ -145,6 +145,16 @@ class Mget
 
 private
 
+  def stats()
+    print "+","="*17,"+\n"
+    printf  "|%-17s|\n","Statistics"
+    print "+","="*17,"+\n"
+    printf "|%06d %-10s|\n|%06d %-10s|\n|%06d %-10s|\n",@ok,"ok",@fail,"fail",@skipped,"skipped"
+    print "+","="*17,"+\n"
+    printf "|%06d %-10s|\n|%06d %-10s|\n",@downloaded,"downloaded",@converted,"converted"
+    print "+","="*17,"+\n"
+  end
+
   def getMovie()
     movie   = nil
     case @target
@@ -181,44 +191,49 @@ private
       end
     end
     
-    @suffix  += movie.suffix()
+    @suffix   = movie.suffix()
     @saveDir  = movie.class.to_s
     @convertable  = true if @suffix == '.flv'
     puts  @target if @show
     convert() if download()
+    @name     = nil
     @ok += 1
   end
   
   def fileLoop()
+    curr = 1
     open(@input) do |f|
       f.each_line { @total += 1 }
       f.seek(0)
       f.each_line do |line|
-        # TODO - Get each movie
-        curr = 0
         next if line.empty? || line =~ /^#/
         self.target = line
         next if @target.nil?
-        printf "[*] %d/%d...", curr,@total
+        printf "[*] %d/%d...\n", curr,@total
         getMovie()
-        print "done\n"
         curr += 1
       end
     end
+    stats()
+  end
+  
+  def ask(question)
+    print question + ' [Y/n] '
+    answer  = $stdin.gets.chomp
+    return (answer.empty? || answer =~ /^Y/i)
   end
   
   def download()
     return if @download == false
-    flag  = (@quiet) ? '-q ' : ''
-    Dir.mkdir(@saveDir) unless File.exists?(@saveDir) && File.directory?(@saveDir)
-    getName() if @name.nil? || @name.empty? || @fromFile
     unless @download
-      print "Download the movie (using wget) now? [Y/n] "
-      unless $stdin.gets.chomp =~ /^\s*Y|\s*$/i
+      unless ask("Download the movie (using wget) now?")
         @skipped += 1
         return false
       end
     end
+    flag  = (@quiet) ? '-q ' : ''
+    Dir.mkdir(@saveDir) unless File.exists?(@saveDir) && File.directory?(@saveDir)
+    getName() if @name.nil? || @name.empty? || @fromFile
     system("wget #{ flag }\"#{@target}\" -O \"#{ @saveDir }/#{ @name + @suffix}\"")
     @downloaded += 1
     return true
@@ -228,13 +243,11 @@ private
     return if @convert  == false
     return unless @convertable
     unless @convert
-      print "Convert the flv movie to mpg (using ffmpeg) now? [Y/n] "
-      return false if $stdin.gets.chomp =~ /^\s*Y|\s*$/i
+      return false unless ask("Convert the flv movie to mpg (using ffmpeg) now?")
     end
       system("ffmpeg -i #{ @saveDir }/#{@name + @suffix} #{ @saveDir }/#@name.mpg")
       @converted += 1
-      print "Delete the flv movie now? [Y/n] "
-      File.delete(name + suffix) if $stdin.gets.chomp =~ /^\s*Y|\s*$/i
+      File.delete(@name + @suffix) if ask("Delete the flv movie now?")
   end
 
   def getName()
