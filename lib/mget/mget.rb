@@ -60,12 +60,10 @@ class Mget
   end
   
   def target=(target)
+    Mget.help() if target.nil?
     if target.nil? || target !~ /^http:\/\//
       setWarning("Invalid url: #{ target }")
-      unless @fromFile
-        Mget.help()
-        exit
-      end
+      Mget.help()
       @target = nil
     else
       @target = target
