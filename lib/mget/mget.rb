@@ -145,7 +145,7 @@ class Mget
     puts "--convert,    -c    - convert all downloaded and convertable files (also sets -d)"
     puts "--noconvert,  -C    - don't convert any files"
     puts "--remove,     -r    - remove leftover file after conversion"
-    puts "--noremove,   -R    - never remove letover file after conversion"
+    puts "--noremove,   -R    - never remove leftover file after conversion"
     puts "--show,       -s    - show direct download link for the video"
     puts "--quiet,      -q    - hides output from wget"
     exit
