@@ -22,6 +22,7 @@
 require 'mget/error_handling'
 
 class Mget
+  VERSION = '1.00'
   include ErrorHandling
   attr_writer :show, :quiet
   def initialize()
@@ -134,19 +135,31 @@ class Mget
   def Mget.help()
     scriptName  = $0
     scriptName = 'mget' if ENV.has_key?('OS')
-    puts "Usage:   #{ scriptName } [options] url"
-    puts "url                 - a valid google video, youtube, vids.myspace, smog.pl, patrz.pl or metacafe movie link"
-    puts "--name,       -n    - name used to save the file, without the extension"
-    puts "--input,      -i    - read links from file"
-    puts "--download,   -d    - download files without asking"
-    puts "--nodownload, -D    - don't download any files (also sets -C)"
-    puts "--convert,    -c    - convert all downloaded and convertable files (also sets -d)"
-    puts "--noconvert,  -C    - don't convert any files"
-    puts "--remove,     -r    - remove leftover file after conversion"
-    puts "--noremove,   -R    - never remove leftover file after conversion"
-    puts "--show,       -s    - show direct download link for the video"
-    puts "--quiet,      -q    - hides output from wget"
+    puts %{
+Usage:   #{ scriptName } [options] url
+url                 - a valid google video, youtube, vids.myspace, smog.pl, patrz.pl or metacafe movie link
+--name,       -n    - name used to save the file, without the extension
+--input,      -i    - read links from file
+--download,   -d    - download files without asking
+--nodownload, -D    - don't download any files (also sets -C)
+--convert,    -c    - convert all downloaded and convertable files (also sets -d)
+--noconvert,  -C    - don't convert any files
+--remove,     -r    - remove leftover file after conversion
+--noremove,   -R    - never remove leftover file after conversion
+--show,       -s    - show direct download link for the video
+--quiet,      -q    - hides output from wget
+--version,    -v    - display version information
+}
     exit
+  end
+
+  def Mget.version()
+ puts %{
+Movie Get v#{VERSION} - http://green.kom.pl/~mget
+Copyright (C) 2006 Adam Wolk "mulander" <netprobe@gmail.com>
+                             "defc0n" <defc0n@da-mail.net> 
+  }
+  exit
   end
 
 private
