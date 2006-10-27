@@ -48,35 +48,37 @@ opts = GetoptLong.new(
 opts.ordering = GetoptLong::REQUIRE_ORDER
 
 mget = Mget.new()
-
-opts.each do |opt, arg|
-  case opt
-    when '--help'
-      Mget.help()
-    when '--name'
-      mget.name   = arg
-    when '--input'
-      mget.input  = arg
-    when '--download'
-      mget.download = true
-    when '--nodownload'
-      mget.download = false
-      mget.show     = true
-    when '--convert'
-      mget.convert  = true
-    when '--noconvert'
-      mget.convert  = false
-    when '--remove'
-      mget.remove   = true
-    when '--noremove'
-      mget.remove   = false
-    when '--show'
-      mget.show     = true
-    when '--quiet'
-      mget.quiet    = true
+begin
+  opts.each do |opt, arg|
+    case opt
+      when '--help'
+        Mget.help()
+      when '--name'
+        mget.name   = arg
+      when '--input'
+        mget.input  = arg
+      when '--download'
+        mget.download = true
+      when '--nodownload'
+        mget.download = false
+        mget.show     = true
+      when '--convert'
+        mget.convert  = true
+      when '--noconvert'
+        mget.convert  = false
+      when '--remove'
+        mget.remove   = true
+      when '--noremove'
+        mget.remove   = false
+      when '--show'
+        mget.show     = true
+      when '--quiet'
+        mget.quiet    = true
+    end
   end
+rescue GetoptLong::InvalidOption
+  Mget.help()
 end
-
 mget.target = ARGV[0] unless mget.fromFile?
 
 mget.run()
