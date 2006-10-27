@@ -27,8 +27,7 @@ class Wrzuta < MovieSite
       when /film/
         getVideo()
       else
-        setError("Unsupported site: #{@target}")
-        exit
+        setError("Unsupported site: #{@url}")
     end
   end
   
@@ -44,14 +43,13 @@ class Wrzuta < MovieSite
   
   def getAudio()
     @suffix = '.mp3'
-    open(@url) do |f|
-      f.each_line do |line|
-        if line =~ /SWFObject\("\.\.\/\.\.\/mp3\.swf\?file\_key=(.+?)/
-          if @url =~ /http:\/\/(.+?)\.wrzuta\.pl\/audio\/(.+?)\/(.+?)/
-            return 'http://' + $1 + '.wrzuta.pl/aud/file/' + $2 + '/' + $3
-          end
+    base, path = @url.scan(/http:\/\/(.+)(\/audio\/.+)/).flatten
+    Net::HTTP.get(base, path).each_line { |line|
+      if line =~ /SWFObject\("\.\.\/\.\.\/mp3\.swf\?file\_key=(.+?)/
+        if @url =~ /http:\/\/(.+?)\.wrzuta\.pl\/audio\/(.+?)\/(.+?)/
+          return 'http://' + $1 + '.wrzuta.pl/aud/file/' + $2 + '/' + $3
         end
       end
-    end
+    }
   end
 end
