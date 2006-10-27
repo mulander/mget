@@ -21,6 +21,18 @@ require 'mget/movie_site'
 
 class Wrzuta < MovieSite
   def get()
+    case @url 
+      when /audio/
+        getAudio()
+      when /film/
+        getVideo()
+      else
+        setError("Unsupported site: #{@target}")
+        exit
+    end
+  end
+  
+  def getVideo()
     open(@url) do |f|
       f.each_line do |line|
         if line =~ /src=&quot;http:\/\/.+?wrzuta\.pl\/wrzuta_embed\.js\?wrzuta_key=.+?&wrzuta_flv=(http:\/\/.+?wrzuta\.pl\/vid\/file\/.+?\/.+?)&wrzuta_mini/
@@ -28,5 +40,19 @@ class Wrzuta < MovieSite
         end
       end
     end
+  end
+  
+  def getAudio()
+    open(@url) do |f|
+      f.each_line do |line|
+        if line =~ /SWFObject\("\.\.\/\.\.\/mp3\.swf\?file\_key=(.+?)/
+          if @url =~ /http:\/\/(.+?)\.wrzuta\.pl\/audio\/(.+?)\/(.+?)/
+            return 'http://' + $1 + '.wrzuta.pl/aud/file/' + $2 + '/' + $3
+          end
+        end
+      end
+    end
+    
+    @suffix = '.mp3'
   end
 end
