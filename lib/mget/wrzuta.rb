@@ -43,6 +43,7 @@ class Wrzuta < MovieSite
   end
   
   def getAudio()
+    @suffix = '.mp3'
     open(@url) do |f|
       f.each_line do |line|
         if line =~ /SWFObject\("\.\.\/\.\.\/mp3\.swf\?file\_key=(.+?)/
@@ -52,7 +53,5 @@ class Wrzuta < MovieSite
         end
       end
     end
-    
-    @suffix = '.mp3'
   end
 end
