@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -w
-# v0.09
+# v1.00
 #
 # Copyright (C) 2006 Adam Wolk "mulander" <netprobe@gmail.com>
 #                                "defc0n" <defc0n@da-mail.net>
@@ -42,7 +42,8 @@ opts = GetoptLong.new(
   ["--noremove","-R",   GetoptLong::NO_ARGUMENT],
   ["--noconvert","-C",  GetoptLong::NO_ARGUMENT],
   ["--show","-s",       GetoptLong::NO_ARGUMENT],
-  ["--quiet","-q",      GetoptLong::NO_ARGUMENT]
+  ["--quiet","-q",      GetoptLong::NO_ARGUMENT],
+  ["--version","-v",      GetoptLong::NO_ARGUMENT]
 )
 
 opts.ordering = GetoptLong::REQUIRE_ORDER
@@ -74,6 +75,8 @@ begin
         mget.show     = true
       when '--quiet'
         mget.quiet    = true
+      when '--version'
+        Mget.version()
     end
   end
 rescue GetoptLong::InvalidOption
