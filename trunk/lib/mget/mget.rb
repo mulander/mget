@@ -251,7 +251,7 @@ private
   end
 
   def getName()
-    dirInfo = Dir.entries(@saveDir).find_all { |p| p =~ /\d{1,6}/ }
+    dirInfo = Dir.entries(@saveDir).find_all { |p| p =~ /\d{6}/ }
     if dirInfo.length.zero?
       @name = @saveDir + '0'*6
     else
