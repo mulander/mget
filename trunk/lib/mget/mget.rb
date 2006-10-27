@@ -28,6 +28,7 @@ class Mget
     @quiet      = false
     @download   = nil
     @convert    = nil
+    @remove     = nil
     @log        = Logger.new('mget.log')
     @name       = nil
     @fromFile   = false
@@ -81,6 +82,11 @@ class Mget
     return unless @convert.nil?
     @convert  = flag
     @download = true if @convert
+  end
+  
+  def remove=(flag)
+    return unless @convert.nil?
+    @convert  = flag
   end
   
   def name=(saveName)
@@ -138,6 +144,8 @@ class Mget
     puts "--nodownload, -D    - don't download any files (also sets -C)"
     puts "--convert,    -c    - convert all downloaded and convertable files (also sets -d)"
     puts "--noconvert,  -C    - don't convert any files"
+    puts "--remove,     -r    - remove leftover file after conversion"
+    puts "--noremove,   -R    - never remove letover file after conversion"
     puts "--show,       -s    - show direct download link for the video"
     puts "--quiet,      -q    - hides output from wget"
     exit
@@ -247,7 +255,11 @@ private
     end
       system("ffmpeg -i #{ @saveDir }/#{@name + @suffix} #{ @saveDir }/#@name.mpg")
       @converted += 1
-      File.delete(@name + @suffix) if ask("Delete the flv movie now?")
+      return false if @remove == false
+      unless @remove
+        return false unless ask("Delete the flv movie now?")
+      end
+      File.delete(@name + @suffix)
   end
 
   def getName()
