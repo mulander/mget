@@ -270,7 +270,7 @@ private
       unless @remove
         return false unless ask("Delete the flv movie now?")
       end
-      File.delete(@name + @suffix)
+      File.delete(@saveDir + '/' + @name + @suffix)
   end
 
   def getName()
