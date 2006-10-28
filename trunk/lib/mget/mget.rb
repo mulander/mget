@@ -22,7 +22,7 @@
 require 'mget/error_handling'
 
 class Mget
-  VERSION = '1.00'
+  VERSION = '1.01'
   include ErrorHandling
   attr_writer :show, :quiet
   def initialize()
