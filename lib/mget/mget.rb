@@ -225,13 +225,14 @@ private
       end
     end
     
-    @suffix   = movie.suffix()
-    @mms      = movie.mms?
-    @saveDir  = movie.class.to_s if @fromFile
-    @convertable  = true if @suffix == '.flv'
+    @suffix     = movie.suffix()
+    @mms        = movie.mms?
+    @saveDir    = movie.class.to_s if @fromFile
+    @movieSite  = movie.class.to_s
+    @convertable= true if @suffix == '.flv'
     puts  @target if @show
     convert() if download()
-    @name     = nil
+    @name       = nil
     @ok += 1
   end
   
@@ -271,6 +272,7 @@ private
     Dir.mkdir(@saveDir) unless File.exists?(@saveDir) && File.directory?(@saveDir) if @fromFile
     
     getName() if @name.nil? || @name.empty? || @fromFile
+    
     if @mms
       system("mplayer -dumpstream -dumpfile \"#{ @saveDir }/#{ @name + @suffix }\" \"#@target\"")
     else
@@ -298,9 +300,9 @@ private
   def getName()
     dirInfo = Dir.entries(@saveDir).find_all { |p| p =~ /\d{6}/ }
     if dirInfo.length.zero?
-      @name = @saveDir + '0'*6
+      @name = @movieSite + '0'*6
     else
-      @name = dirInfo.map { |e| e.gsub(/\..{3}$/,'') }.uniq.max.succ
+      @name = dirInfo.map { |e| e.gsub(/#{@movieSite}\d{6}\..{3}$/,'') }.uniq.max.succ
     end
   end  
 end
