@@ -41,6 +41,7 @@ class Mget
     @downloaded = 0
     @converted  = 0
     @convertable= false
+    @saveDir    = '.'
     
     if ENV.has_key?('OS')
       @wget   = File.exists?(ENV['SystemRoot'] + '\wget.exe')
