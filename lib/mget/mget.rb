@@ -40,7 +40,7 @@ class Mget
     @total      = 0
     @downloaded = 0
     @converted  = 0
-    @convertable  = false
+    @convertable= false
     
     if ENV.has_key?('OS')
       @wget   = File.exists?(ENV['SystemRoot'] + '\wget.exe')
@@ -251,7 +251,13 @@ private
       end
     end
     flag  = (@quiet) ? '-q ' : ''
-    Dir.mkdir(@saveDir) unless File.exists?(@saveDir) && File.directory?(@saveDir)
+    
+    if @fromFile
+      Dir.mkdir(@saveDir) unless File.exists?(@saveDir) && File.directory?(@saveDir)
+    else
+      @saveDir = '.'
+    end
+    
     getName() if @name.nil? || @name.empty? || @fromFile
     system("wget #{ flag }\"#{@target}\" -O \"#{ @saveDir }/#{ @name + @suffix}\"")
     @downloaded += 1
