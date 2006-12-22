@@ -26,7 +26,7 @@ class MovieSite
   include ErrorHandling
   attr_reader :suffix
   def initialize(url,config)
-    @log = Logger.new(self.class.to_s + '.log')
+    @log = Logger.new(logDir() + self.class.to_s + '.log')
     @error    = nil
     @url      = url
     @cookie   = ''
