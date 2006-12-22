@@ -32,6 +32,7 @@ class MovieSite
     @cookie   = ''
     @loggedIn = false
     @suffix   = '.flv'
+    @mms      = false
     @useragent= 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111'
     unless config.nil?
       @username = config['username']
@@ -40,6 +41,10 @@ class MovieSite
       @username = nil
       @password = nil
     end
+  end
+  
+  def mms?
+    @mms
   end
   
   private
