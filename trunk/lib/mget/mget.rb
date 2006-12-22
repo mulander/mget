@@ -272,9 +272,9 @@ private
     
     getName() if @name.nil? || @name.empty? || @fromFile
     if @mms
-      system("wget #{ flag }\"#{@target}\" -O \"#{ @saveDir }/#{ @name + @suffix}\"")
-    else
       system("mplayer -dumpstream -dumpfile \"#{ @saveDir }/#{ @name + @suffix }\" \"#@target\"")
+    else
+      system("wget #{ flag }\"#{@target}\" -O \"#{ @saveDir }/#{ @name + @suffix}\"")
     end
     @downloaded += 1
     return true
