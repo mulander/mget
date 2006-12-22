@@ -192,6 +192,9 @@ private
       when /google/
         require 'mget/google'
         movie   = Google.new(@target,nil)
+      when /movies\.yahoo\.com/
+        require 'mget/yahoo'
+        movie   = Yahoo.new(@target,nil)
       when /vids\.myspace/
         require 'mget/my_space'
         movie   = MySpace.new(@target,nil)
@@ -201,6 +204,9 @@ private
       when /wrzuta/
         require 'mget/wrzuta'
         movie   = Wrzuta.new(@target,nil)
+      when /itvp\.pl/
+        require 'mget/itvp'
+        movie   = ITVP.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
@@ -217,7 +223,8 @@ private
     end
     
     @suffix   = movie.suffix()
-    @saveDir  = movie.class.to_s
+    @mms      = movie.mms?
+    @saveDir  = movie.class.to_s if @fromFile
     @convertable  = true if @suffix == '.flv'
     puts  @target if @show
     convert() if download()
@@ -251,21 +258,21 @@ private
   def download()
     return if @download == false
     unless @download
-      unless ask("Download the movie (using wget) now?")
+      unless ask("Download the movie (using " +(@mms ? 'mplayer' : 'wget')+ ") now?")
         @skipped += 1
         return false
       end
     end
     flag  = (@quiet) ? '-q ' : ''
     
-    if @fromFile
-      Dir.mkdir(@saveDir) unless File.exists?(@saveDir) && File.directory?(@saveDir)
-    else
-      @saveDir = '.'
-    end
+    Dir.mkdir(@saveDir) unless File.exists?(@saveDir) && File.directory?(@saveDir) if @fromFile
     
     getName() if @name.nil? || @name.empty? || @fromFile
-    system("wget #{ flag }\"#{@target}\" -O \"#{ @saveDir }/#{ @name + @suffix}\"")
+    if @mms
+      system("wget #{ flag }\"#{@target}\" -O \"#{ @saveDir }/#{ @name + @suffix}\"")
+    else
+      system("mplayer -dumpstream -dumpfile \"#{ @saveDir }/#{ @name + @suffix }\" \"#@target\"")
+    end
     @downloaded += 1
     return true
   end
