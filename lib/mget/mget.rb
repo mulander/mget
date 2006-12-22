@@ -143,7 +143,9 @@ class Mget
     scriptName = 'mget' if ENV.has_key?('OS')
     puts %{
 Usage:   #{ scriptName } [options] url
-url                 - a valid google video, youtube, vids.myspace, smog.pl, patrz.pl or metacafe movie link
+url                 - a valid google video, youtube, vids.myspace, 
+                        patrz.pl, wrzuta.pl (also audio), itvp.pl
+                        movies.yahoo.com or metacafe movie link
 --name,       -n    - name used to save the file, without the extension
 --input,      -i    - read links from file
 --download,   -d    - download files without asking
