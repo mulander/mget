@@ -45,11 +45,14 @@ class Mget
     if ENV.has_key?('OS')
       @wget   = File.exists?(ENV['SystemRoot'] + '\wget.exe')
       @ffmpeg = File.exists?(ENV['SystemRoot'] + '\ffmpeg.exe')
+      @mplayer= File.exists?(ENV['SystemRoot'] + '\mplayer')
     else
       `which wget`
       @wget   = ($?.exitstatus == 0)
       `which ffmpeg`
       @ffmpeg = ($?.exitstatus == 0)
+      `which mplayer`
+      @mplayer =($?.exitstatus == 0)
     end
             
     setInfo("If you want to download movies, you must install" + \
@@ -57,6 +60,9 @@ class Mget
     
     setInfo("If you want to convert movies, you must install" + \
           " ffmpeg (http://sourceforge.net/projects/ffmpeg/)") unless @ffmpeg
+          
+    setInfo("If you want to download mms:// streams you must install" + \
+          " mplayer (http://mplayerhq.hu/)") unless @mplayer
     
   end
   
