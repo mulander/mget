@@ -24,4 +24,15 @@ private
     puts @info
     @log.info(string)
   end
+  
+  def logDir()
+    path = './'
+    if ENV.has_key?('APPDATA')
+      path = ENV['APPDATA'] + '\\mget\\'
+    else
+      path = ENV['HOME'] + '/.mget/'
+    end
+    Dir.mkdir(path) unless File.exists?(path) && File.directory?(path)
+    return path
+  end
 end

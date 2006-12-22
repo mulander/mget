@@ -30,7 +30,7 @@ class Mget
     @download   = nil
     @convert    = nil
     @remove     = nil
-    @log        = Logger.new('mget.log')
+    @log        = Logger.new(logDir() + 'mget.log')
     @name       = nil
     @fromFile   = false
     @show       = false
