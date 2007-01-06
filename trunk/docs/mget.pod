@@ -44,7 +44,7 @@ B<--noconvert>
 
 B<-r>
 B<--remove>
-  If this flag is set then leftover files from conversion are removed without prompoting the user.
+  If this flag is set then leftover files from conversion are removed without prompting the user.
 
 B<-R>
 B<--noremove>
@@ -68,7 +68,7 @@ B<mget -cr url>
   Will download the video from the url, convert it and remove the leftover file without prompting the user on each step.
 
 B<mget -dC url>
-  Will download the movie, but will not attempt to convert it. Again the user will not be promptet.
+  Will download the movie, but will not attempt to convert it. Again the user will not be prompted.
 
 B<mget -n cool_movie url>
   Will ask the user to download the movie or not. Will ask to convert the movie or not (if the movie is convertable). Will ask if it should remove the leftover files (if conversion occured). And will save the movie as cool_movie.extension where extension is determined automatically by the script.
