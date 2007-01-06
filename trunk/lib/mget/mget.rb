@@ -210,6 +210,18 @@ private
       when /itvp\.pl/
         require 'mget/itvp'
         movie   = ITVP.new(@target,nil)
+      when /glumbert/
+        require 'mget/glumbert'
+        movie = Glumbert.new(@target,nil)
+      when /funpic/
+        require 'mget/funpic'
+        movie = Funpic.new(@target,nil)
+      when /habtv/
+        require 'mget/habtv'
+        movie = HabTV.new(@target,nil)
+      when /interia/
+        require 'mget/interia'
+        movie = Interia.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
