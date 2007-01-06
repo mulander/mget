@@ -22,7 +22,7 @@
 require 'mget/error_handling'
 
 class Mget
-  VERSION = '1.10'
+  VERSION = '1.15'
   include ErrorHandling
   attr_writer :show, :quiet
   def initialize()
@@ -146,7 +146,8 @@ class Mget
 Usage:   #{ scriptName } [options] url
 url                 - a valid google video, youtube, vids.myspace, 
                         patrz.pl, wrzuta.pl (also audio), itvp.pl
-                        movies.yahoo.com or metacafe movie link
+                        movies.yahoo.com, interia.pl, onet.pl, funpic.hu,
+                        glumbert, habtv.hu or metacafe movie link
 --name,       -n    - name used to save the file, without the extension
 --input,      -i    - read links from file
 --download,   -d    - download files without asking
@@ -222,6 +223,9 @@ private
       when /interia/
         require 'mget/interia'
         movie = Interia.new(@target,nil)
+      when /onet/
+        require 'mget/onet'
+        movie = Onet.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
