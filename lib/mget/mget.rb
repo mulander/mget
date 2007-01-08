@@ -22,7 +22,7 @@
 require 'mget/error_handling'
 
 class Mget
-  VERSION = '1.15'
+  VERSION = '1.16'
   include ErrorHandling
   attr_writer :show, :quiet
   def initialize()
@@ -226,6 +226,9 @@ private
       when /onet/
         require 'mget/onet'
         movie = Onet.new(@target,nil)
+      when /allocine/
+        require 'mget/allocine'
+        movie = Allocine.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
