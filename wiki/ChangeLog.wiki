@@ -1,0 +1,105 @@
+#labels Phase-Design
+*mget (1.16)*
+
+  + Added support for allocone.fr.
+
+_  -- mulander, defc0n 8.01.2007_
+
+
+*mget (1.15)*
+
+  + Added support for:
+    - funpic.hu (issue #7);
+    - glumbert.hu (issue #5);
+    - habtv.hu;
+    - interia.pl;
+    - onet.pl;
+  + Added documentation (pod/man/html) (issue #8);
+  + Fixed Windows Installer (issue #5).
+
+_  -- mulander, defc0n 6.01.2007_
+
+  
+*mget (1.10)*
+
+  + Added support for: 
+    - movies.yahoo.com (requires mplayer);
+    - itvp.pl (requires mplayer) (issue #3);
+  + Fixed some minor bugs;
+  + Behaviour changes:
+    - log files are now stored in one place;
+    - files are downloaded to sub-directories
+      only when the list of movies is supplied
+      from a file ( by the --input command ).
+
+_  -- mulander, defc0n, 22.12.2006_
+
+
+*mget (1.01)*
+
+  + Added support for: 
+    - wrzuta.pl audio (mp3) download;
+  + Fixed deleting leftover files from convertion.
+
+_  -- defc0n, 28.10.2006_
+
+
+*mget (1.00)*
+
+  + Added support for: 
+    - youtube videos rated as adult (issue #1);
+    - wrzuta.pl;
+  + Added features:
+    - read links from a file;
+    - always download/never download flag;
+    - always convert/never convert flag;
+    - added always remove/never remove (letover file after conversion) flag;
+    - silencing wget output;
+    - statistics when using file for input;
+  + Removed support for:
+    - smog.pl;
+  + Code is now object oriented;
+  + Fixed default answer (Enter stands for "Yes" now);
+  + Behaviour changes:
+    - direct links are not shown by default (--show to see them);
+    - name is not required now (--name to specify a name);
+    - all videos are now downloaded to a directory structure Site/SiteXXXXXX.ext
+      Site stands for movie site (example. Youtube, MetaCafe etc.)
+      XXXXXX stands for 6 digits (example. 000000, 000001, 000002 etc.)
+      .ext stands for the file extension (example. .flv, .mpg etc.).
+
+_ -- mulander, defc0n, 27.10.2006_
+
+
+*mget (0.08)*
+
+  + Fixed Windows usage.
+
+_ -- defc0n, 24.10.2006_
+
+
+*mget (0.07)*
+
+  + Fixed function 'convert'.
+
+_ -- defc0n, 23.10.2006_
+
+
+*mget (0.06)*
+
+  + Fixed windows behaviour.
+
+_ -- defc0n, 18.10.2006_
+
+
+*mget (0.05)*
+
+  + Added support for:
+    - MySpace Video;
+    - patrz.pl;
+    - smog.pl;
+  + Fixed metacafe downloading;
+  + Converting flv to avi using ffmpeg.
+
+_ -- defc0n, 18.10.2006_
+
