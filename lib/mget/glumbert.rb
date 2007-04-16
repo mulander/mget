@@ -22,6 +22,6 @@ require 'mget/movie_site'
 class Glumbert < MovieSite
     def get()
       name = @url.scan(/http:\/\/glumbert\.com\/media\/(.+?)$/).flatten
-      return "http://static.glumbert.com/media/video/flash/#{ name }.flv"
+      return "http://cdn.glumbert.com/video/flash/#{ name }.flv"
     end
 end
