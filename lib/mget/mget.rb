@@ -147,7 +147,8 @@ Usage:   #{ scriptName } [options] url
 url                 - a valid google video, youtube, vids.myspace, 
                         patrz.pl, wrzuta.pl (also audio), itvp.pl
                         movies.yahoo.com, interia.pl, onet.pl, funpic.hu,
-                        glumbert, habtv.hu or metacafe movie link
+                        glumbert, habtv.hu, gazeta.pl, dailymotion.com
+                        or metacafe movie link
 --name,       -n    - name used to save the file, without the extension
 --input,      -i    - read links from file
 --download,   -d    - download files without asking
@@ -232,6 +233,9 @@ private
       when /gazeta/
         require 'mget/gazeta'
         movie = Gazeta.new(@target,nil)
+      when /dailymotion/
+        require 'mget/dailymotion'
+        movie = Dailymotion.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
