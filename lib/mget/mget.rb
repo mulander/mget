@@ -229,6 +229,9 @@ private
       when /allocine/
         require 'mget/allocine'
         movie = Allocine.new(@target,nil)
+      when /gazeta/
+        require 'mget/gazeta'
+        movie = Gazeta.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
