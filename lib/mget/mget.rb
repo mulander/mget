@@ -148,7 +148,7 @@ url                 - a valid google video, youtube, vids.myspace,
                         patrz.pl, wrzuta.pl (also audio), itvp.pl
                         movies.yahoo.com, interia.pl, onet.pl, funpic.hu,
                         glumbert, habtv.hu, gazeta.pl, dailymotion.com,
-                        allocine.fr, tvn24, porkolt
+                        allocine.fr, tvn24, porkolt, stage6
                         or metacafe movie link
 --name,       -n    - name used to save the file, without the extension
 --input,      -i    - read links from file
@@ -243,6 +243,9 @@ private
       when /porkolt/
         require 'mget/porkolt'
         movie = Porkolt.new(@target,nil)
+      when /stage6/
+        require 'mget/stage6'
+        movie = Stage6.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
