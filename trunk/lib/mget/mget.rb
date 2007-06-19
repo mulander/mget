@@ -148,7 +148,7 @@ url                 - a valid google video, youtube, vids.myspace,
                         patrz.pl, wrzuta.pl (also audio), itvp.pl
                         movies.yahoo.com, interia.pl, onet.pl, funpic.hu,
                         glumbert, habtv.hu, gazeta.pl, dailymotion.com,
-                        allocine.fr
+                        allocine.fr, tvn24
                         or metacafe movie link
 --name,       -n    - name used to save the file, without the extension
 --input,      -i    - read links from file
@@ -237,6 +237,9 @@ private
       when /dailymotion/
         require 'mget/dailymotion'
         movie = Dailymotion.new(@target,nil)
+      when /tvn24/
+        require 'mget/tvn24/
+        movie = TVN24.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
