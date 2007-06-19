@@ -21,11 +21,10 @@ require 'mget/movie_site'
 
 class Patrz < MovieSite
   def get()
-    open(@url) do |f|
-      f.each_line do |line|
-        if line =~ /src="http:\/\/www(\d)\.patrz\.pl\/player\/patrzplayer\.swf\?file=(\d{5})&amp;typ=(\d)&amp;server=(\d)/
-          return 'http://www' + $4 + '.patrz.pl/uplx/5flv/' + $2 + '.flv'
-        end
+    text = `wget -O- "#{@url}"`
+    text.each_line do |line|
+      if line =~ /<param name="movie" value="http:\/\/patrz.pl\/patrzplay\.noad\.swf\?file=(.+?)&amp;typ=1&amp;server=(.+?)" \/>/
+        return "http://www" + $2 + ".patrz.pl/uplx/5flv/" + $1 + ".flv"
       end
     end
   end
