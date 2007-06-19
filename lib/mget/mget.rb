@@ -22,7 +22,7 @@
 require 'mget/error_handling'
 
 class Mget
-  VERSION = '1.16'
+  VERSION = '1.17'
   include ErrorHandling
   attr_writer :show, :quiet
   def initialize()
@@ -147,7 +147,8 @@ Usage:   #{ scriptName } [options] url
 url                 - a valid google video, youtube, vids.myspace, 
                         patrz.pl, wrzuta.pl (also audio), itvp.pl
                         movies.yahoo.com, interia.pl, onet.pl, funpic.hu,
-                        glumbert, habtv.hu, gazeta.pl, dailymotion.com
+                        glumbert, habtv.hu, gazeta.pl, dailymotion.com,
+                        allocine.fr
                         or metacafe movie link
 --name,       -n    - name used to save the file, without the extension
 --input,      -i    - read links from file
