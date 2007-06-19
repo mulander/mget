@@ -26,33 +26,44 @@ class ITVP < MovieSite
     @mms         = true
     @convertable = false
   end
-  
+
   def get()
     @suffix = '.wmv'
-    id = @url.scan(/http:\/\/www\.itvp\.pl\/sys\/media\/i\.tvp\/idm\/(.+?)\/rodzaj\/.+?\/width\/.+?\/height\/.+?/).flatten
-    @url = "http://mediagen.itvp.pl/media/dispatch.php?idm=#{ id }&rodzaj=1"
-    open(@url) do |f|
+    @out = ''
+    mode, id = @url.scan(/http:\/\/www\.itvp\.pl\/player\.html\?mode=(.+?)&channel=.+?&video_id=(.+?)$/).flatten
+    @url1 = "http://www.itvp.pl/pub/stat/common/materialinfo2?mode=#{ mode }&material_id=&format_id=&video_id=#{ id }"
+    open(@url1) do |f|
       f.each_line do |line|
-        if line =~ /URL=(http:\/\/mediagen\.itvp\.pl\/media\/dispatch\.php\?type=.+?&spl=0)"\>/
-          open($1) do |f_1|
-            f_1.each_line do |line_1|
-              if line_1 =~ /\<PARAM NAME="URL" VALUE="(.+?)"\>/
-                open($1) do |f_2|
-                  f_2.each_line do |line_2|
-                    if line_2 =~ /target="\_blank"\/\>\<ref href="(.+?)" \/>/
-                      out = $1
-                      out.gsub!(/\%2f/, "/")
-                      out.gsub!(/\%2b/, "+")
-                      out.gsub!(/\%3d/, "=")
-                      return out
-                    end
-                  end
-                end
-              end
-            end
-          end
+        if line =~ /\<material\>(.+?)\<\/material\>/
+          @material = $1
         end
       end
+    end
+
+    open("http://www.itvp.pl/pub/sess/common/playrequest2?format_id=&mode=#{ mode }&material_id=#{ @material }") do |f|
+      f.each_line do |line|
+        if line =~ /<request_id>(.+?)<\/request_id>/
+          @request = $1
+        end
+      end
+    end
+
+    open("http://www.itvp.pl/pub/stat/common/itvp.asx?request_id=#{ @request }") do |f|
+      f.each_line do |line|      
+        if line =~ /<\/title><ref href="(mms:\/\/.+?)"/
+          @out = $1
+        end
+      end
+    end
+
+    if @out.empty?
+      get()
+    else
+      @out.gsub!('%2f', '/')
+#     @out.gsub!('%3d', '=')
+      @out.gsub!('%3d', '')
+      @out.gsub!('%2b', '+')
+      return @out
     end
   end
 end
