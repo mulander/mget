@@ -1,6 +1,22 @@
 #labels Phase-Design
 *mget (1.16)*
 
+  * Added support for:
+    # gazeta.pl (issue #11);
+    # dailymotion.com (issue #9);
+    # tvn24.pl (issue #13);
+    # porkolt.com (issue #15);
+  * Fixed support for:
+    # itvp.pl;
+    # patrz.pl (issue #14);
+    # video.google.com.
+.
+
+_  -- mulander, defc0n 19.06.2007_
+
+
+*mget (1.16)*
+
   * Added support for allocone.fr.
 
 _  -- mulander, defc0n 8.01.2007_
@@ -102,6 +118,5 @@ _ -- defc0n, 18.10.2006_
   * Converting flv to avi using ffmpeg.
 
 _ -- defc0n, 18.10.2006_
-
 
 
