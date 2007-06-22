@@ -1,0 +1,21 @@
+==Arch Linux==
+
+In console:
+
+_packman -S mget_
+
+
+==Debian/Ubuntu==
+
+Add the following line to your /etc/apt/sources.list
+
+`deb http://mget.ircfans.org/ ./`
+
+In console:
+
+_apt-get update && apt-get install mget_
+
+
+==Windows==
+
+Download [http://mget.googlecode.com/files/mget-1.17-win.exe windows installer].
