@@ -1,0 +1,100 @@
+==[http://allocine.fr/ Allocine]==
+
+http://www.allocine.fr/video/player_gen_cmedia=18731066&cfilm=109443.html
+
+
+==[http://collegehumor.com/ CollegeHumor]==
+
+http://www.collegehumor.com/video:1770625
+
+
+==[http://dailymotion.com/ Dailymotion]==
+
+http://www.dailymotion.com/cluster/tech/featured/video/x2pb7a_mario-tesla_tech
+
+
+==[http://funpic.hu/ Funpic]==
+
+http://www.habtv.hu/index.php?vid=3136
+
+
+==[http://gazeta.pl/ Gazeta]==
+
+http://wideo.gazeta.pl/wideo/0,0,4384769.html
+
+
+==[http://glumbert.com/ Glumbert]==
+
+http://glumbert.com/media/hiphopviolin
+
+
+==[http://video.google.com/ Google Video]==
+
+http://video.google.com/url?docid=-719552952925002193
+
+
+==[http://habtv.hu/ HabTV]==
+
+http://habtv.hu/index.php?vid=4561
+
+
+==[http://interia.pl/ Interia]==
+
+http://video.interia.pl/obejrzyj,film,62019
+
+
+==[http://www.itvp.pl/ iTVP]==
+
+http://www.itvp.pl/player.html?mode=2&channel=452&video_id=20417
+
+
+==[http://metacafe.com/ Metacafe]==
+
+http://www.metacafe.com/watch/761613/google_trick/
+
+
+==[http://www.myspace.com/ MySpace Video]==
+
+http://vids.myspace.com/index.cfm?fuseaction=vids.individual&VideoID=15477395
+
+
+==[http://onet.pl/ Onet]==
+
+http://teledyski.onet.pl/0,2558267,0,1,teledyski.html
+
+
+==[http://patrz.pl/ Patrz]==
+
+http://love.the.game.patrz.pl/
+
+
+==[http://porkolt.com/ Porkolt]==
+
+http://www.porkolt.com/trailers/rush+hour-47082.html
+
+
+==[http://stage6.divx.com/ Stage6]==
+
+http://stage6.divx.com/user/trophyradio/video/1442565/Beatsteaks---Cut-Off-The-Top
+
+
+==[http://tvn24.pl/ TVN24]==
+
+http://www.tvn24.pl/2065952,12691,0,0,1,wideo.html
+
+
+==[http://wrzuta.pl/ Wrzuta]==
+
+http://el.pi.wrzuta.pl/film/dgP8Zu0BbM/ale_gol
+
+http://lamzi.wrzuta.pl/audio/1ZmNGWZogY/linkin_park_-_what_i_ve_done
+
+
+==[http://movies.yahoo.com/ Yahoo Movies]==
+
+http://movies.yahoo.com/movie/1808405726/video/3601886/
+
+
+==[http://youtube.com/ YouTube]==
+
+http://youtube.com/watch?v=U2L-5ncWtbc
