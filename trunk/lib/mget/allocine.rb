@@ -23,22 +23,15 @@ class Allocine < MovieSite
 
   def initialize(url,config)
     super(url,config)
-    @mms         = true
-    @convertable = false
   end
 
   def get()
-    @suffix = '.wmv'
-    open(@url) do |f|
+    id, id2 = @url.scan(/cmedia=(.+?)&cfilm=(.+?)\.html/).flatten
+
+    open('http://www.allocine.fr/video/xml/videos.asp?media=' + id.to_s + '&ref=' + id2) do |f|
       f.each_line do |line|
-        if line =~ /src="(http:\/\/www.allocine.fr\/_video\/generation.asx?.+?)"/
-          open($1) do |f_1|
-            f_1.each_line do |line_1|
-              if line_1 =~ /HREF = "(mms:\/\/.+?)" \/\>/
-                return $1
-              end
-            end
-          end
+        if line =~ /md_path="(.+?)"/
+          return 'http://a69.g.akamai.net/n/69/32563/v1/mediaplayer.allocine.fr' + $1 + '.flv'
         end
       end
     end
