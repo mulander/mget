@@ -48,7 +48,7 @@ class Youtube < MovieSite
       f.each_line do |line|
           if line =~ /embed src="(http:\/\/.+?)"/
             open($1,{'Cookie' => @cookie, 'User-Agent' => @useragent}) { |d| id = d.base_uri.to_s.scan(/.+video_id=(.+)/) }
-            return "http://youtube.com/get_video.php?video_id=#{id}"
+            return "http://74.125.13.23/get_video?video_id=#{id}"
           end
         end
       end
