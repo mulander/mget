@@ -22,15 +22,19 @@ require 'mget/movie_site'
 class MySpace < MovieSite
   def get()
     id = 0
-    if @url =~ /videoID=(\d{10})/i
+    if @url =~ /VideoID=(\d{0,10})/i
       id = $1.to_s
     else
       setError("Invalid myspace link, are you sure you copied it correctly?\n")
       return nil
     end
-    return 'http://content.movies.myspace.com/00' + id[0..4] \
-    						+ '/' + id[-2..-1].reverse \
-  	     					+ '/' + id[-4 .. -3].reverse \
-		    				+ '/' + id + '.flv'
+
+    open("http://mediaservices.myspace.com/services/rss.ashx?type=video&videoID=" + id) do |f|
+      f.each_line do |line|
+        if line =~ /content url="(http:\/\/.+?)" type/
+          return $1
+        end
+      end
+    end
   end
 end

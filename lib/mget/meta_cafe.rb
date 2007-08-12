@@ -21,7 +21,7 @@ require 'mget/movie_site'
 
 class MetaCafe < MovieSite
   def get()
-    if @url =~ /\/watch\/(.*)\//
+    if @url =~ /\/watch\/(.+?)\//
       id = $1
     end
 
