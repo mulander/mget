@@ -1,5 +1,5 @@
 #!/usr/bin/ruby -w
-# v1.17
+# v1.18
 #
 # Copyright (C) 2006 Adam Wolk "mulander" <netprobe@gmail.com>
 #                                "defc0n" <defc0n@da-mail.net>
