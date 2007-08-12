@@ -29,14 +29,29 @@ class Yahoo < MovieSite
   
   def get()
     @suffix = '.wmv'
-    id = @url.scan(/http:\/\/movies\.yahoo\.com\/mv\/mf\/frame\?theme=minfo&lid=.+?\.(.+?)-.+?\,.+?&type=t/).flatten
-    @url = "http://playlist.yahoo.com/makeplaylist.dll?id=#{ id }"
+    id = @url.scan(/http:\/\/movies\.yahoo\.com\/movie\/.+?\/video\/(.+?)$/).flatten
+    @url = "http://cosmos.bcst.yahoo.com/ver/237/process/getSequence.php?&node_id=#{ id }"
+
     open(@url) do |f|
       f.each_line do |line|
-        if line =~ /\<Ref href = "(.+?)" \/\>/
-          return $1
+        if line =~ /makeplaylist\.dll\?sid=(.+?)&/
+          sid = $1
+
+          open('http://playlist.yahoo.com/makeplaylist.dll?sid=' + sid.to_s + '&pt=xml') do |f_|
+            f_.each_line do |line_|
+              if line_ =~ /URL="(.+?)"/
+                out = $1
+              end
+
+              out = out.to_s
+              out.gsub!('&amp;', '&')
+
+              return out
+            end
+          end
         end
       end
     end
   end
 end
+
