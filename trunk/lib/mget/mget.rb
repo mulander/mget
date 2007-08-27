@@ -42,7 +42,7 @@ class Mget
     @converted  = 0
     @convertable= false
     @saveDir    = '.'
-    
+
     if ENV.has_key?('OS')
       @wget   = File.exists?(ENV['SystemRoot'] + '\wget.exe')
       @ffmpeg = File.exists?(ENV['SystemRoot'] + '\ffmpeg.exe')
@@ -55,18 +55,18 @@ class Mget
       `which mplayer`
       @mplayer =($?.exitstatus == 0)
     end
-            
+
     setInfo("If you want to download movies, you must install" + \
           " wget (http://www.gnu.org/software/wget/)\n") unless @wget
-    
+
     setInfo("If you want to convert movies, you must install" + \
           " ffmpeg (http://sourceforge.net/projects/ffmpeg/)") unless @ffmpeg
-          
+
     setInfo("If you want to download mms:// streams you must install" + \
           " mplayer (http://mplayerhq.hu/)") unless @mplayer
-    
+
   end
-  
+
   def target=(target)
     Mget.help() if target.nil?
     if target.nil? || target !~ /^http:\/\//
@@ -77,24 +77,24 @@ class Mget
       @target = target
     end
   end
-  
+
   def download=(flag)
     return unless @download.nil?
     @download = flag
     @convert  = false unless @download
   end
-  
+
   def convert=(flag)
     return unless @convert.nil?
     @convert  = flag
     @download = true if @convert
   end
-  
+
   def remove=(flag)
     return unless @convert.nil?
     @convert  = flag
   end
-  
+
   def name=(saveName)
     if @fromFile
       setWarning("--name ignored because of --input")
@@ -107,7 +107,7 @@ class Mget
     end
 
   end
-  
+
   def input=(fileName)
     if File.exists? fileName
       if File.zero? fileName
@@ -126,11 +126,11 @@ class Mget
       exit
     end
   end
-  
+
   def fromFile?()
     return @fromFile
   end
-  
+
   def run()
     if @fromFile
       fileLoop()
@@ -138,13 +138,13 @@ class Mget
       getMovie()
     end
   end
-  
+
   def Mget.help()
     scriptName  = $0
     scriptName = 'mget' if ENV.has_key?('OS')
     puts %{
 Usage:   #{ scriptName } [options] url
-url                 - a valid google video, youtube, vids.myspace, 
+url                 - a valid google video, youtube, vids.myspace,
                         patrz.pl, wrzuta.pl (also audio), itvp.pl
                         movies.yahoo.com, interia.pl, onet.pl, funpic.hu,
                         glumbert, habtv.hu, gazeta.pl, dailymotion.com,
@@ -167,9 +167,9 @@ url                 - a valid google video, youtube, vids.myspace,
 
   def Mget.version()
  puts %{
-Movie Get v#{VERSION} - http://green.kom.pl/~mget
+Movie Get v#{VERSION} - http://movie-get.org
 Copyright (C) 2006 Adam Wolk "mulander" <netprobe@gmail.com>
-                             "defc0n" <defc0n@da-mail.net> 
+                             "defc0n" <defc0n@da-mail.net>
   }
   exit
   end
@@ -254,7 +254,7 @@ private
         exit
     end
     @target   = movie.get()
-    
+
     if movie.error?
       @fail += 1
       if @fromFile
@@ -263,7 +263,7 @@ private
         exit
       end
     end
-    
+
     @suffix     = movie.suffix()
     @mms        = movie.mms?
     @saveDir    = movie.class.to_s if @fromFile
@@ -274,7 +274,7 @@ private
     @name       = nil
     @ok += 1
   end
-  
+
   def fileLoop()
     curr = 1
     open(@input) do |f|
@@ -291,13 +291,13 @@ private
     end
     stats()
   end
-  
+
   def ask(question)
     print question + ' [Y/n] '
     answer  = $stdin.gets.chomp
     return (answer.empty? || answer =~ /^Y/i)
   end
-  
+
   def download()
     return if @download == false
     unless @download
@@ -307,11 +307,11 @@ private
       end
     end
     flag  = (@quiet) ? '-q ' : ''
-    
+
     Dir.mkdir(@saveDir) unless File.exists?(@saveDir) && File.directory?(@saveDir) if @fromFile
-    
+
     getName() if @name.nil? || @name.empty? || @fromFile
-    
+
     if @mms
       system("mplayer -dumpstream -dumpfile \"#{ @saveDir }/#{ @name + @suffix }\" \"#@target\"")
     else
@@ -320,7 +320,7 @@ private
     @downloaded += 1
     return true
   end
-  
+
   def convert()
     return if @convert  == false
     return unless @convertable
@@ -343,7 +343,7 @@ private
     else
       @name = dirInfo.map { |e| e.gsub(/\..{3}$/,'') }.uniq.max.succ
     end
-  end  
+  end
 end
 
 
