@@ -1,3 +1,5 @@
+Links below are examples of input that Ruby Movie Get expects.
+
 ==[http://allocine.fr/ Allocine]==
 
 http://www.allocine.fr/video/player_gen_cmedia=18731066&cfilm=109443.html
