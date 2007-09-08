@@ -249,6 +249,9 @@ private
       when /collegehumor/
         require 'mget/collegehumor'
         movie = CollegeHumor.new(@target,nil)
+      when /ceskatelevize/
+        require 'mget/czechtv'
+        movie = CzechTV.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
