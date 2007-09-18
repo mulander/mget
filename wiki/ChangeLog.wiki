@@ -1,4 +1,14 @@
 #labels Phase-Design
+*mget (1.18)*
+
+  * Added support for:
+    # collegehumor.com (issue #24);
+  * Fixed support for:
+    # YouTube (issue #20).
+
+_  -- mulander, defc0n 18.09.2007_
+
+
 *mget (1.17)*
 
   * Added support for:
@@ -119,3 +129,5 @@ _ -- defc0n, 18.10.2006_
 
 _ -- defc0n, 18.10.2006_
 
+ 
+ 
