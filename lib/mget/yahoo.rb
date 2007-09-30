@@ -21,12 +21,12 @@ require 'mget/movie_site'
 
 class Yahoo < MovieSite
 
-  def initialize(url,config)
+  def initialize(url)
     super(url,config)
     @mms         = true
     @convertable = false
   end
-  
+
   def get()
     @suffix = '.wmv'
     id = @url.scan(/http:\/\/movies\.yahoo\.com\/movie\/.+?\/video\/(.+?)$/).flatten
