@@ -79,20 +79,19 @@ class Mget
   end
 
   def download=(flag)
-    return unless @download.nil?
     @download = flag
-    @convert  = false unless @download
+    self.convert  = false unless @download
   end
 
   def convert=(flag)
-    return unless @convert.nil?
     @convert  = flag
-    @download = true if @convert
+    @download = true  if @convert
+    @remove   = false unless @convert
   end
 
   def remove=(flag)
-    return unless @convert.nil?
-    @convert  = flag
+    @remove      = flag
+    self.convert = true if @remove
   end
 
   def name=(saveName)
@@ -125,6 +124,10 @@ class Mget
       setError("File does not exist: #{ fileName }")
       exit
     end
+  end
+
+  def fromFile=(flag)
+    @fromFile = flag
   end
 
   def fromFile?()
@@ -175,15 +178,25 @@ Copyright (C) 2006 Adam Wolk "mulander" <netprobe@gmail.com>
   end
 
 private
-
+##
+# prints statistics to STDOUT
+# and returns a string in simple html format
   def stats()
-    print "+","="*17,"+\n"
-    printf  "|%-17s|\n","Statistics"
-    print "+","="*17,"+\n"
-    printf "|%06d %-10s|\n|%06d %-10s|\n|%06d %-10s|\n",@ok,"ok",@fail,"fail",@skipped,"skipped"
-    print "+","="*17,"+\n"
-    printf "|%06d %-10s|\n|%06d %-10s|\n",@downloaded,"downloaded",@converted,"converted"
-    print "+","="*17,"+\n"
+    str =	"+","="*17,"+\n" + \
+    		"|%-17s|\n" % "Statistics" + \
+    		"+","="*17,"+\n" + \
+    		"|%06d %-10s|\n|%06d %-10s|\n|%06d %-10s|\n" % [@ok,"ok",@fail,"fail",@skipped,"skipped"] + \
+    		"+","="*17,"+\n" + \
+    		"|%06d %-10s|\n|%06d %-10s|\n" % [@downloaded,"downloaded",@converted,"converted"] + \
+    		"+","="*17,"+\n"
+    print str
+    str =	"\n" + \
+    		"%-17s\n" % "Statistics" + \
+    		"<font color=\"darkgreen\">%06d %-10s</font>\n<font color=\"red\">%06d %-10s</font>\n<font color=\"blue\">%06d %-10s</font>\n" % [@ok,"ok",@fail,"fail",@skipped,"skipped"] + \
+    		"\n" + \
+    		"<font color=\"darkgreen\">%06d %-10s<\font>\n<font color=\"darkgreen\">%06d %-10s</font>\n" % [@downloaded,"downloaded",@converted,"converted"] + \
+    		"\n"
+    return str
   end
 
   def getMovie()
@@ -191,71 +204,72 @@ private
     case @target
       when /youtube/
         require 'mget/youtube'
-        movie   = Youtube.new(@target, @@youtube)
+        movie   = Youtube.new(@target)
       when /metacafe/
         require 'mget/meta_cafe'
-        movie   = MetaCafe.new(@target,nil)
+        movie   = MetaCafe.new(@target)
       when /google/
         require 'mget/google'
-        movie   = Google.new(@target,nil)
+        movie   = Google.new(@target)
       when /movies\.yahoo\.com/
         require 'mget/yahoo'
-        movie   = Yahoo.new(@target,nil)
+        movie   = Yahoo.new(@target)
       when /vids\.myspace/
         require 'mget/my_space'
-        movie   = MySpace.new(@target,nil)
+        movie   = MySpace.new(@target)
       when /patrz/
         require 'mget/patrz'
-        movie   = Patrz.new(@target,nil)
+        movie   = Patrz.new(@target)
       when /wrzuta/
         require 'mget/wrzuta'
-        movie   = Wrzuta.new(@target,nil)
+        movie   = Wrzuta.new(@target)
       when /itvp\.pl/
         require 'mget/itvp'
-        movie   = ITVP.new(@target,nil)
+        movie   = ITVP.new(@target)
       when /glumbert/
         require 'mget/glumbert'
-        movie = Glumbert.new(@target,nil)
+        movie = Glumbert.new(@target)
       when /funpic/
         require 'mget/funpic'
-        movie = Funpic.new(@target,nil)
+        movie = Funpic.new(@target)
       when /habtv/
         require 'mget/habtv'
-        movie = HabTV.new(@target,nil)
+        movie = HabTV.new(@target)
       when /interia/
         require 'mget/interia'
-        movie = Interia.new(@target,nil)
+        movie = Interia.new(@target)
       when /onet/
         require 'mget/onet'
-        movie = Onet.new(@target,nil)
+        movie = Onet.new(@target)
       when /allocine/
         require 'mget/allocine'
-        movie = Allocine.new(@target,nil)
+        movie = Allocine.new(@target)
       when /gazeta/
         require 'mget/gazeta'
-        movie = Gazeta.new(@target,nil)
+        movie = Gazeta.new(@target)
       when /dailymotion/
         require 'mget/dailymotion'
-        movie = Dailymotion.new(@target,nil)
+        movie = Dailymotion.new(@target)
       when /tvn24/
         require 'mget/tvn24'
-        movie = TVN24.new(@target,nil)
+        movie = TVN24.new(@target)
       when /porkolt/
         require 'mget/porkolt'
-        movie = Porkolt.new(@target,nil)
+        movie = Porkolt.new(@target)
       when /stage6/
         require 'mget/stage6'
-        movie = Stage6.new(@target,nil)
+        movie = Stage6.new(@target)
       when /collegehumor/
         require 'mget/collegehumor'
-        movie = CollegeHumor.new(@target,nil)
+        movie = CollegeHumor.new(@target)
       when /ceskatelevize/
         require 'mget/czechtv'
-        movie = CzechTV.new(@target,nil)
+        movie = CzechTV.new(@target)
       else
         setError("Unsupported site: #{@target}")
         exit
     end
+
     @target   = movie.get()
 
     if movie.error?
@@ -266,16 +280,20 @@ private
         exit
       end
     end
-
-    @suffix     = movie.suffix()
-    @mms        = movie.mms?
-    @saveDir    = movie.class.to_s if @fromFile
-    @movieSite  = movie.class.to_s
-    @convertable= true if @suffix == '.flv'
-    puts  @target if @show
-    convert() if download()
-    @name       = nil
-    @ok += 1
+    unless movie.skipped?
+	@suffix     = movie.suffix()
+	@mms        = movie.mms?
+	@saveDir    = movie.class.to_s if @fromFile
+	@movieSite  = movie.class.to_s
+	@convertable= true if @suffix == '.flv'
+	puts  @target if @show
+	convert() if download()
+	@name       = nil
+	@ok += 1
+	return @target
+    else
+    	@skipped += 1
+    end
   end
 
   def fileLoop()

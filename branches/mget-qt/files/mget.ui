@@ -1,0 +1,230 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>MovieGetGui</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>MovieGetGui</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>590</width>
+            <height>470</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Ruby Movie Get</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout1</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLineEdit">
+                    <property name="name">
+                        <cstring>targetEdit</cstring>
+                    </property>
+                </widget>
+                <widget class="QToolButton">
+                    <property name="name">
+                        <cstring>targetOpen</cstring>
+                    </property>
+                    <property name="text">
+                        <string>...</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>targetAdd</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Add</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+A</string>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget class="QListView">
+            <column>
+                <property name="text">
+                    <string>URL</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>targetList</cstring>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout3</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QButtonGroup">
+                    <property name="name">
+                        <cstring>modeGroup</cstring>
+                    </property>
+                    <property name="title">
+                        <string>Mode</string>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>radioShow</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;show</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+S</string>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Prevents downloading the file. Just shows the direct download url.</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>radioDownload</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;download</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+D</string>
+                            </property>
+                            <property name="checked">
+                                <bool>true</bool>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Download all files</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>radioDownloadConvert</cstring>
+                            </property>
+                            <property name="text">
+                                <string>download &amp;&amp; &amp;convert</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+C</string>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Download all files and convert .flv files</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>radioConvertRemove</cstring>
+                            </property>
+                            <property name="text">
+                                <string>convert &amp;&amp; &amp;remove</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+R</string>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>Downloads all files, converts all .flv files and removes leftover files from conversion.</string>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout35</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>targetClear</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Clear</string>
+                            </property>
+                            <property name="accel">
+                                <string></string>
+                            </property>
+                            <property name="toolTip" stdset="0">
+                                <string>clear the list of targets</string>
+                            </property>
+                        </widget>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>targetGet</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Get All</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+G</string>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>targetAdd</sender>
+        <signal>clicked()</signal>
+        <receiver>MovieGetGui</receiver>
+        <slot>slotPopulateTargets()</slot>
+    </connection>
+    <connection>
+        <sender>targetGet</sender>
+        <signal>clicked()</signal>
+        <receiver>MovieGetGui</receiver>
+        <slot>slotGetTargets()</slot>
+    </connection>
+    <connection>
+        <sender>targetOpen</sender>
+        <signal>clicked()</signal>
+        <receiver>MovieGetGui</receiver>
+        <slot>slotOpenTarget()</slot>
+    </connection>
+    <connection>
+        <sender>targetClear</sender>
+        <signal>clicked()</signal>
+        <receiver>targetList</receiver>
+        <slot>clear()</slot>
+    </connection>
+    <connection>
+        <sender>targetClear</sender>
+        <signal>clicked()</signal>
+        <receiver>MovieGetGui</receiver>
+        <slot>slotCleanup()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>slotPopulateTargets()</slot>
+    <slot>slotGetTargets()</slot>
+    <slot>slotOpenTarget()</slot>
+    <slot>slotCleanup()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

@@ -16,42 +16,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
-require 'logger'
-
-module ErrorHandling
-
-  def error?
-    return !@error.nil?
+module Config
+  @@youtube = { 'username' => '', 'password' => '' }
+  public
+  def setUsername(username)
+    @@youtube['username'] = username
   end
-
-private
-  def setError(string)
-    @error = "[!] " + string
-    puts @error
-    @log.error(string)
+  def setPassword(password)
+    @@youtube['password'] = password
   end
-
-  def setWarning(string)
-    @warn = "[*] " + string
-    puts @warn
-    @log.warn(string)
+  def getUsername()
+    @@youtube['username'].nil? ? nil : @@youtube['username']
   end
-
-  def setInfo(string)
-    @info = "[?] " + string
-    puts @info
-    @log.info(string)
-  end
-
-  def logDir()
-    path = './'
-    if ENV.has_key?('APPDATA')
-      path = ENV['APPDATA'] + '\\mget\\'
-    else
-      path = ENV['HOME'] + '/.mget/'
-    end
-    Dir.mkdir(path) unless File.exists?(path) && File.directory?(path)
-    return path
+  def getPassword()
+    @@youtube['password'].nil? ? nil : @@youtube['password']
   end
 end

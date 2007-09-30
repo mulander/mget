@@ -21,7 +21,7 @@ require 'mget/movie_site'
 
 class Allocine < MovieSite
 
-  def initialize(url,config)
+  def initialize(url)
     super(url,config)
   end
 
