@@ -260,7 +260,10 @@ private
         movie = Sevenload.new(@target,nil)
       when /liveleak/
         require 'mget/liveleak'
-        movie= LiveLeak.new(@target,nil)
+        movie = LiveLeak.new(@target,nil)
+      when /loadup/
+        require 'mget/loadup'
+        movie = LoadUp.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
