@@ -258,6 +258,9 @@ private
       when /sevenload/
         require 'mget/sevenload'
         movie = Sevenload.new(@target,nil)
+      when /liveleak/
+        require 'mget/liveleak'
+        movie= LiveLeak.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
