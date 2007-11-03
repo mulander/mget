@@ -252,6 +252,9 @@ private
       when /ceskatelevize/
         require 'mget/czechtv'
         movie = CzechTV.new(@target,nil)
+      when /veoh/
+        require 'mget/veoh'
+        movie = Veoh.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
