@@ -32,7 +32,7 @@ class Youtube < MovieSite
       setError("Invalid Youtube link")
     end
   end
-  
+
   def get()
     return if error?
     id = ''
@@ -48,15 +48,16 @@ class Youtube < MovieSite
       end
       f.each_line do |line|
         if line =~ /embed src="(http:\/\/.+?)"/
-          open($1,{'Cookie' => @cookie, 'User-Agent' => @useragent}) { |d| id = d.base_uri.to_s.scan(/.+video_id=(.+)/) }
+            url = $1.sub(/'.*/, '')
+            open(url,{'Cookie' => @cookie, 'User-Agent' => @useragent}) { |d| id = d.base_uri.to_s.scan(/.+video_id=(.+)/) }
           return "http://74.125.13.23/get_video?video_id=#{id}"
         end
       end
     end
   end
-  
+
   private
-  
+
   def login() # seems to work
     res = Net::HTTP.post_form(URI.parse('http://' + @base + '/login?next_url=' + @watch),
     {'current_form' => 'loginForm','username' => @username,
@@ -76,7 +77,7 @@ class Youtube < MovieSite
       return false
     end
   end
-  
+
   def confirm
     data = 'next_url=#@watch&action_confirm=Confirm'
     headers = {
@@ -89,7 +90,7 @@ class Youtube < MovieSite
     @@cookieMem = @cookie
     @@cookieSet = true
   end
-  
+
   def adult?(url)
     if url =~ /(\/verify_age.+)/
       @confirm = $1
