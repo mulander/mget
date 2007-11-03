@@ -21,7 +21,7 @@ require 'mget/movie_site'
 
 class Stage6 < MovieSite
     def get()
-      id = @url.scan(/http:\/\/stage6\.divx\.com\/.+?\/.+?\/(.+?)\/.+?/).flatten
+      id = @url.scan(/stage6.+?\/.+?\/(\d+?)\/.+?/).flatten
       id = id.to_s
       return "http://video.stage6.com/" + id
     end
