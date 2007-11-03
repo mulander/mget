@@ -35,7 +35,7 @@ class AccountInfoImpl < AccountInfoForm
   def initialize(parent = nil, name = nil, modal = false, fl = 0)
     super
   end
-  
+
   def slotSaveInfo(*k)
     unless @usernameEdit.text.empty? && @passwordEdit.text.empty?
       setUsername(@usernameEdit.text)
@@ -60,7 +60,7 @@ class MgetGuiImpl < MovieGetGui
     @mget = Mget.new()
     @targets = Array.new
   end
-  
+
   def slotPopulateTargets(*k)
     unless @targetEdit.text.empty?
       if File.exist?(@targetEdit.text)
@@ -81,7 +81,7 @@ class MgetGuiImpl < MovieGetGui
       @targetEdit.text = ''
     end
   end
-  
+
   def slotGetTargets(*k)
     w = MgetOutput.new
     w.show
@@ -102,10 +102,11 @@ class MgetGuiImpl < MovieGetGui
     else
       @mget.remove   = true
     end
-    
+
     @targets.each do |target|
       @mget.target = target
       target = @mget.getMovie()
+      next if target.class == Fixnum # the user probably skipped entering the password, so we couldn't get the url
       w.outputEdit.append("<a href=\"#{ target }\">#{ target }</a>")
     end
     str = @mget.stats()
@@ -113,7 +114,7 @@ class MgetGuiImpl < MovieGetGui
       w.outputEdit.append(line.to_s)
     end
   end
-  
+
   def slotOpenTarget(*k)
     @targetEdit.text = Qt::FileDialog.getOpenFileName()
   end
