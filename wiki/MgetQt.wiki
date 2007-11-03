@@ -30,5 +30,3 @@ This is the final window we see after the app finishes. Here we have direct down
 
 = Current Issues =
 The main problem with the Qt version right now is described in issue #35
-
-issue #34 - remembering the password, this is not a big problem - just didn't have the time to implement it yet.
