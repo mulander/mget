@@ -21,8 +21,8 @@ require 'mget/movie_site'
 
 class ITVP < MovieSite
 
-  def initialize(url,config)
-    super(url,config)
+  def initialize(url)
+    super(url)
     @mms         = true
     @convertable = false
   end
@@ -49,7 +49,7 @@ class ITVP < MovieSite
     end
 
     open("http://www.itvp.pl/pub/stat/common/itvp.asx?request_id=#{ @request }") do |f|
-      f.each_line do |line|      
+      f.each_line do |line|
         if line =~ /<\/title><ref href="(mms:\/\/.+?)"/
           @out = $1
         end

@@ -23,8 +23,8 @@ require 'mget/movie_site'
 
 class CzechTV < MovieSite
 
-  def initialize(url,config)
-    super(url,config)
+  def initialize(url)
+    super(url)
     @mms         = true
     @convertable = false
   end

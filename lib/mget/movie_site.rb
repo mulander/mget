@@ -24,8 +24,9 @@ require 'uri'
 
 class MovieSite
   include ErrorHandling
+  include Config
   attr_reader :suffix
-  def initialize(url,config)
+  def initialize(url)
     @log = Logger.new(logDir() + self.class.to_s + '.log')
     @error    = nil
     @url      = url
@@ -33,20 +34,20 @@ class MovieSite
     @loggedIn = false
     @suffix   = '.flv'
     @mms      = false
+    @skip     = false # skip this url?
     @useragent= 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.1) Gecko/20060111'
-    unless config.nil?
-      @username = config['username']
-      @password = config['password']
-    else
-      @username = nil
-      @password = nil
-    end
+    @username = getUsername()
+    @password = getPassword()
   end
-  
+
   def mms?
     @mms
   end
-  
+
+  def skipped?
+    @skip
+  end
+
   private
   def passwordSet?
     return (@password.nil? || @password.empty?) ? false : true
@@ -54,30 +55,21 @@ class MovieSite
   def usernameSet?
     return (@username.nil? || @username.empty?) ? false : true
   end
-  
+
   def loggedIn?
     return @loggedIn
   end
- 
-  def askPassword
-    print "#{ self.class } password: "
-    @password = $stdin.gets.chomp
-  end
-  
-  def askUsername
-    print "#{ self.class } username: "
-    @username = $stdin.gets.chomp
-  end  
 
   def askAccountInfo
-    puts "#{ self.class } decided that in order to view this movie you must identify"
-    until usernameSet?
-      askUsername()
+    w = AccountInfoImpl.new
+    ret = 1
+    unless w.loaded? # don't show the dialog if config loaded from file
+      w.show
+      ret = w.exec
     end
-    
-    until passwordSet?
-      askPassword()
-    end
+    @skip = true if ret.zero? # skip this file if the user clicked 'Abort'
+    @username = getUsername()
+    @password = getPassword()
   end
 
 end
