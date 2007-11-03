@@ -22,7 +22,7 @@
 require 'mget/error_handling'
 
 class Mget
-  VERSION = '1.18'
+  VERSION = '1.19.0'
   include ErrorHandling
   attr_writer :show, :quiet
   def initialize()
@@ -147,12 +147,8 @@ class Mget
     scriptName = 'mget' if ENV.has_key?('OS')
     puts %{
 Usage:   #{ scriptName } [options] url
-url                 - a valid google video, youtube, vids.myspace,
-                        patrz.pl, wrzuta.pl (also audio), itvp.pl
-                        movies.yahoo.com, interia.pl, onet.pl, funpic.hu,
-                        glumbert, habtv.hu, gazeta.pl, dailymotion.com,
-                        allocine.fr, tvn24, porkolt, stage6, collegehumor
-                        or metacafe movie link
+url                 - a valid movie link; you can find the list of supported sites on
+                      the project hompage: http://movie-get.org
 --name,       -n    - name used to save the file, without the extension
 --input,      -i    - read links from file
 --download,   -d    - download files without asking
