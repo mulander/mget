@@ -19,10 +19,16 @@
 
 require 'mget/movie_site'
 
-class Stage6 < MovieSite
+class LoadUp < MovieSite
     def get()
-      id = @url.scan(/stage6.+?\/.+?\/(\d+?)\/.+?/).flatten
-      id = id.to_s
-      return "http://video.stage6.com/" + id
+      id = @url.scan(/loadup\.ru\/video\/view\/\?id=(.+?)$/).flatten.to_s
+
+      open('http://loadup.ru/video/view/url/?ticket=' + id) do |f|
+        f.each_line do |line|
+          if line =~ /&_vidURL=(.+?)&/
+            return $1
+          end
+        end
+      end
     end
 end

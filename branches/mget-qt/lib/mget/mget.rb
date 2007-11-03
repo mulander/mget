@@ -264,7 +264,19 @@ private
         movie = CollegeHumor.new(@target)
       when /ceskatelevize/
         require 'mget/czechtv'
-        movie = CzechTV.new(@target)
+        movie = CzechTV.new(@target,nil)
+      when /veoh/
+        require 'mget/veoh'
+        movie = Veoh.new(@target,nil)
+      when /sevenload/
+        require 'mget/sevenload'
+        movie = Sevenload.new(@target,nil)
+      when /liveleak/
+        require 'mget/liveleak'
+        movie = LiveLeak.new(@target,nil)
+      when /loadup/
+        require 'mget/loadup'
+        movie = LoadUp.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit

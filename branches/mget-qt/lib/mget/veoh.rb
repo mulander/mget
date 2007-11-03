@@ -19,10 +19,17 @@
 
 require 'mget/movie_site'
 
-class Stage6 < MovieSite
+class Veoh < MovieSite
     def get()
-      id = @url.scan(/stage6.+?\/.+?\/(\d+?)\/.+?/).flatten
-      id = id.to_s
-      return "http://video.stage6.com/" + id
+      id = @url.scan(/veoh\.com\/videos\/(.+?)\?/).flatten
+      id = "http://www.veoh.com/rest/video/" + id.to_s + "/details"
+
+      open(id) do |f|
+        f.each_line do |line|
+          if line =~ /fullPreviewHashPath="(.+?)"/
+            return $1
+          end
+        end
+      end
     end
 end

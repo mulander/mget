@@ -32,24 +32,16 @@ class Wrzuta < MovieSite
   end
   
   def getVideo()
-    open(@url) do |f|
-      f.each_line do |line|
-        if line =~ /src=&quot;http:\/\/.+?wrzuta\.pl\/wrzuta_embed\.js\?wrzuta_key=.+?&wrzuta_flv=(http:\/\/.+?wrzuta\.pl\/vid\/file\/.+?\/.+?)&wrzuta_mini/
-          return $1
-        end
-      end
-    end
+    output = @url.gsub('film', 'vid/file')
+
+    return output
   end
   
   def getAudio()
     @suffix = '.mp3'
-    base, path = @url.scan(/http:\/\/(.+)(\/audio\/.+)/).flatten
-    Net::HTTP.get(base, path).each_line { |line|
-      if line =~ /SWFObject\("\.\.\/\.\.\/mp3\.swf\?file\_key=(.+?)/
-        if @url =~ /http:\/\/(.+?)\.wrzuta\.pl\/audio\/(.+?)\/(.+?)/
-          return 'http://' + $1 + '.wrzuta.pl/aud/file/' + $2 + '/' + $3
-        end
-      end
-    }
+
+    output = @url.gsub('audio', 'aud/file2')
+
+    return output
   end
 end
