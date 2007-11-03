@@ -62,9 +62,11 @@ class MovieSite
 
   def askAccountInfo
     w = AccountInfoImpl.new
-    w.show
-    ret = w.exec
-    puts '>' + ret.to_s
+    ret = 1
+    unless w.loaded? # don't show the dialog if config loaded from file
+      w.show
+      ret = w.exec
+    end
     @skip = true if ret.zero? # skip this file if the user clicked 'Abort'
     @username = getUsername()
     @password = getPassword()

@@ -34,12 +34,19 @@ class AccountInfoImpl < AccountInfoForm
   include Config
   def initialize(parent = nil, name = nil, modal = false, fl = 0)
     super
+    @loaded = false
+    unless username? and password?   # no previous downloads with passwords
+      @loaded = true if loadConfig() # mark that the config was already loaded
+    end
   end
-
+  def loaded?
+    @loaded
+  end
   def slotSaveInfo(*k)
     unless @usernameEdit.text.empty? && @passwordEdit.text.empty?
       setUsername(@usernameEdit.text)
       setPassword(@passwordEdit.text)
+      saveConfig() if @rememberPassword.checked? # save configuration to file
       self.accept()
     end
   end
