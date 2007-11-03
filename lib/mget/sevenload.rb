@@ -19,10 +19,17 @@
 
 require 'mget/movie_site'
 
-class Stage6 < MovieSite
+class Sevenload < MovieSite
     def get()
-      id = @url.scan(/stage6.+?\/.+?\/(\d+?)\/.+?/).flatten
-      id = id.to_s
-      return "http://video.stage6.com/" + id
+      id = @url.scan(/sevenload\.com\/videos\/(.+?)\/.+?/).flatten
+      id = "http://api.sevenload.com/api/player/id/" + id.to_s + "/"
+
+      open(id) do |f|
+        f.each_line do |line|
+          if line =~ /url="(.+?\.flv)"/
+            return $1
+          end
+        end
+      end
     end
 end

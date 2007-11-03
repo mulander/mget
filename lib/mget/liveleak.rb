@@ -19,10 +19,20 @@
 
 require 'mget/movie_site'
 
-class Stage6 < MovieSite
+class LiveLeak < MovieSite
     def get()
-      id = @url.scan(/stage6.+?\/.+?\/(\d+?)\/.+?/).flatten
-      id = id.to_s
-      return "http://video.stage6.com/" + id
+      id = @url.scan(/liveleak\.com\/view\?i=(.+?)$/).flatten.to_s
+
+      open('http://www.liveleak.com/mi?token=' + id) do |f|
+        f.each_line do |line|
+          if line =~ /\&file_location=(.+?)\&/
+            out = $1
+            out.gsub!('%3A', ':')
+            out.gsub!('%2F', '/')
+
+            return out
+          end
+        end
+      end
     end
 end
