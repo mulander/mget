@@ -255,6 +255,9 @@ private
       when /veoh/
         require 'mget/veoh'
         movie = Veoh.new(@target,nil)
+      when /sevenload/
+        require 'mget/sevenload'
+        movie = Sevenload.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
