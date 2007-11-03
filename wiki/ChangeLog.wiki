@@ -1,4 +1,22 @@
 #labels Phase-Design
+*mget (1.19)* and *mget-qt (1.19.0)*
+
+  * Added support for:
+    # ceskatelevize.cz (issue #31); # contributed by Marcin Babnis
+    # en.sevenload.com (issue #32);
+    # veoh.com         (issue #33);
+    # liveleak.com     (issue #39);
+    # loadup.ru        (issue #41).
+  * Fixed support for:
+    # Wrzuta  (issue #27);
+    # Youtube (issue #37);          # contributed by huf
+    # Stage6  (issue #40).
+  * Updated link in --version information                       (issue #25)
+  * Added a script to generate test cases for MovieSite classes (issue #28)
+
+_  -- mulander, defc0n 3.11.2007_
+
+
 *mget (1.18)*
 
   * Added support for:
