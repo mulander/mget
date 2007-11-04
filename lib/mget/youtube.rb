@@ -22,8 +22,8 @@ require 'mget/movie_site'
 class Youtube < MovieSite
   @@cookieSet = false
   @@cookieMem = ''
-  def initialize(url,config)
-    super(url,config)
+  def initialize(url)
+    super(url)
     @cookie = @@cookieMem if @@cookieSet
     if @url =~ /(\/watch.+)/
       @base  = 'youtube.com'
@@ -32,7 +32,7 @@ class Youtube < MovieSite
       setError("Invalid Youtube link")
     end
   end
-  
+
   def get()
     return if error?
     id = ''
@@ -40,43 +40,44 @@ class Youtube < MovieSite
       if adult?(f.base_uri.to_s)
         until loggedIn?
           askAccountInfo() unless usernameSet? && passwordSet?
+          return nil if @skip
           login
         end
         confirm
         return get()
       end
       f.each_line do |line|
-          if line =~ /embed src="(http:\/\/.+?)"/
+        if line =~ /embed src="(http:\/\/.+?)"/
             url = $1.sub(/'.*/, '')
             open(url,{'Cookie' => @cookie, 'User-Agent' => @useragent}) { |d| id = d.base_uri.to_s.scan(/.+video_id=(.+)/) }
-            return "http://74.125.13.23/get_video?video_id=#{id}"
-          end
+          return "http://74.125.13.23/get_video?video_id=#{id}"
         end
       end
+    end
   end
-  
+
   private
-  
+
   def login() # seems to work
     res = Net::HTTP.post_form(URI.parse('http://' + @base + '/login?next_url=' + @watch),
-                              {'current_form' => 'loginForm','username' => @username,
+    {'current_form' => 'loginForm','username' => @username,
                                'password' => @password, 'next_url' => @watch,
                                'action_login' => 'Log In' })
-  # Youtube sends 303 on a valid login attempt and 200 if failed
+    # Youtube sends 303 on a valid login attempt and 200 if failed
     case res.code
-      when '303'
-        @cookie   = res['set-cookie'].split(' ').find_all { |p| p =~ /use|INFO/ }
-        @cookie   = @cookie.join(' ')
-        @loggedIn = true
-        return true
-      when '200'
-        @username = ''
-        @password = ''
-        setWarning("Invalid username or password")
-        return false
-      end
+    when '303'
+      @cookie   = res['set-cookie'].split(' ').find_all { |p| p =~ /use|INFO/ }
+      @cookie   = @cookie.join(' ')
+      @loggedIn = true
+      return true
+    when '200'
+      @username = ''
+      @password = ''
+      setWarning("Invalid username or password")
+      return false
+    end
   end
-  
+
   def confirm
     data = 'next_url=#@watch&action_confirm=Confirm'
     headers = {
@@ -89,7 +90,7 @@ class Youtube < MovieSite
     @@cookieMem = @cookie
     @@cookieSet = true
   end
-  
+
   def adult?(url)
     if url =~ /(\/verify_age.+)/
       @confirm = $1

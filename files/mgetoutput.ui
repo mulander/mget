@@ -1,0 +1,86 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>MgetOutput</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>MgetOutput</cstring>
+    </property>
+    <property name="enabled">
+        <bool>true</bool>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>797</width>
+            <height>420</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Ruby Movie Get - Output</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout39</cstring>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QTextEdit">
+                    <property name="name">
+                        <cstring>outputEdit</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout38</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>buttonSelectAll</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Select All</string>
+                            </property>
+                        </widget>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>buttonCopy</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Copy to Clipboard</string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>buttonSelectAll</sender>
+        <signal>clicked()</signal>
+        <receiver>outputEdit</receiver>
+        <slot>selectAll()</slot>
+    </connection>
+    <connection>
+        <sender>buttonCopy</sender>
+        <signal>clicked()</signal>
+        <receiver>outputEdit</receiver>
+        <slot>copy()</slot>
+    </connection>
+</connections>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>
