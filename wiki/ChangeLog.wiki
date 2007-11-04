@@ -1,4 +1,9 @@
 #labels Phase-Design
+*mget-qt (1.19.1)*
+  * Fixed a bug where the application ignored all input entered by hand (issue #42)
+
+_  -- mulander 4.11.2007_
+
 *mget (1.19)* and *mget-qt (1.19.0)*
 
   * Added support for:
