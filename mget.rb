@@ -61,7 +61,7 @@ end
 ## End of adjustments
 
 class MgetGuiImpl < MovieGetGui
-  VERSION = '1.18'
+  VERSION = '1.19.1'
   def initialize(parent = nil, name = nil, modal = false, fl = 0)
     super
     @mget = Mget.new()
@@ -84,6 +84,7 @@ class MgetGuiImpl < MovieGetGui
         end
       else
         Qt::ListViewItem.new(@targetList,nil).setText(0, trUtf8(@targetEdit.text) )
+        @targets << @targetEdit.text
       end
       @targetEdit.text = ''
     end
