@@ -1,0 +1,9 @@
+#summary Frequently Asked Questions
+= Windows =
+
+== Where are the files I downloaded? ==
+
+Try searching in _C:\Program Files\mget\Downloads_
+
+
+= Linux =
