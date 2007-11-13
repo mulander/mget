@@ -21,7 +21,7 @@ require 'mget/movie_site'
 
 class Sevenload < MovieSite
     def get()
-      id = @url.scan(/sevenload\.com\/videos\/(.+?)\/.+?/).flatten
+      id = @url.scan(/sevenload\.com\/videos\/(.+?)-|\/.+?/).flatten
       id = "http://api.sevenload.com/api/player/id/" + id.to_s + "/"
 
       open(id) do |f|
