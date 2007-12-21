@@ -1,3 +1,4 @@
+#labels Featured,Phase-Deploy
 ==Arch Linux==
 
 Go to the [http://aur.archlinux.org/packages.php?do_Details=1&ID=7610 mget page] on AUR.
@@ -37,8 +38,6 @@ apt-get update && apt-get install mget
 ==Windows==
 
 Download [http://mget.googlecode.com/files/mget-1.17-win.exe windows installer].
-
-
 
 
 
