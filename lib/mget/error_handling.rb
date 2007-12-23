@@ -47,7 +47,9 @@ private
   def logDir()
     path = './'
     if ENV.has_key?('APPDATA')
-      path = ENV['APPDATA'] + '\\mget\\'
+	  path = 'C:\\Program Files\\mget\\'
+	  Dir.mkdir(path) unless File.exists?(path) && File.directory?(path)
+	  path += 'logs\\'
     else
       path = ENV['HOME'] + '/.mget/'
     end
