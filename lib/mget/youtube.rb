@@ -46,7 +46,7 @@ class Youtube < MovieSite
         return get()
       end
       f.each_line do |line|
-          if line =~ /video_id:'(.+?)'.+?t:'(.+?)'/
+          if line =~ /video_id":\s+"(.+?)".+?t":\s+"(.+?)"/
             return "http://youtube.com/get_video?video_id=#{$1}&t=#{$2}"
           end
         end
