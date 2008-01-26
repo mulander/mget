@@ -1,8 +1,11 @@
 #summary Qt Graphical User Interface for Ruby Movie Get
+#labels Deprecated
 
 = Introduction =
 
 = Details =
+
+This branch is no longer developed and supported.
 
 = Screenshots =
 
