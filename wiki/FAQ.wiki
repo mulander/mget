@@ -4,6 +4,9 @@
 = Common =
 
 == What are .mpkg files? ==
+
+http://gus.damnedangels.net/stuff/vzcrmpkg.png
+
 There are just plain text files. The first line of a .mpkg file should be a [http://en.wikipedia.org/wiki/Shebang_(Unix) shebang] pointing to the mpkg runtime wrapper. This line is only required for Unix based operating systems. The rest of the file consists of links to media on sites supported by mget (in example youtube.com)
 
 == How does mget handle .mpkg files? ==
@@ -18,7 +21,7 @@ now go to your favorite movie site supported by mget, and gather some links, whe
 {{{
  #!/usr/bin/mpkg -dCi
  http://youtube...
- http://itvp...
+ http://youtube...
  http://youtube...
 }}}
 when you are done just save the file as some_file.mpkg
