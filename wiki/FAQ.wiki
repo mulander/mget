@@ -26,6 +26,9 @@ now go to your favorite movie site supported by mget, and gather some links, whe
 }}}
 when you are done just save the file as some_file.mpkg
 And that's it! Just be sure to have each movie link on a seperate line. You can skip the shebang line but it's not recommended. Also if you edit your file with notepad select File->Save As... from the menu and for the file name enter some_file.mpkg. If you don't provide the extensions the file will be saved as a plain .txt file and mget won't recognize it.
+
+Lines starting with # are treated as comments.
+Blank lines in the file will be ignored.
 = Windows =
 
 == Where are the files I downloaded? ==
