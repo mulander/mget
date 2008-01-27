@@ -342,7 +342,7 @@ private
     unless @convert
       return false unless ask("Convert the flv movie to mpg (using ffmpeg) now?")
     end
-      system("ffmpeg -i #{ @saveDir }/#{@name + @suffix} #{ @saveDir }/#@name.mpg")
+      system("ffmpeg -acodec copy -i #{ @saveDir }/#{@name + @suffix} #{ @saveDir }/#@name.mpg")
       @converted += 1
       return false if @remove == false
       unless @remove
