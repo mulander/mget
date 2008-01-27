@@ -27,7 +27,7 @@ And that's it! Just be sure to have each movie link on a seperate line. You can 
 
 == Where are the files I downloaded? ==
 
-Try searching in _C:\Program Files\mget\Downloads_
+Try searching in _C:\Program Files\mget\Downloads_. If you started your download using a .mpkg file then check in the same place where the .mpkg file is located.
 
 
 = Linux =
