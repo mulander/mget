@@ -289,10 +289,14 @@ private
   def fileLoop()
     curr = 1
     open(@input) do |f|
-      f.each_line { @total += 1 }
+      f.each_line { |line|
+        # skip comments and blanks on line count
+        next if line =~/^$/ or line =~ /^#/
+        @total += 1 
+      }
       f.seek(0)
       f.each_line do |line|
-        next if line.empty? || line =~ /^#/
+        next if line =~/^$/ or line =~ /^#/
         self.target = line
         next if @target.nil?
         printf "[*] %d/%d...\n", curr,@total
