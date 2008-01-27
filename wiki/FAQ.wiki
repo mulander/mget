@@ -1,5 +1,28 @@
 #summary Frequently Asked Questions
 #labels Featured,Phase-QA
+
+= Common =
+
+== What are .mpkg files? ==
+There are just plain text files. The first line of a .mpkg file should be a [http://en.wikipedia.org/wiki/Shebang_(Unix) shebang] pointing to the mpkg runtime wrapper. This line is only required for Unix based operating systems. The rest of the file consists of links to media on sites supported by mget (in example youtube.com)
+
+== How does mget handle .mpkg files? ==
+On Windows mget recognizes the .mpkg file format so you can double-click it to start downloading its content. Also you have access to the context menu avaible when you click a .mpkg file with your right mouse button. From the context menu you can choose to download or download and convert the content of your .mpkg file.
+
+== How do I create a .mpkg file ==
+Open your favorite text editor and place the [http://en.wikipedia.org/wiki/Shebang_(Unix) shebang] on the first line, in example
+{{{
+ #!/usr/bin/mpkg -dCi
+}}}
+now go to your favorite movie site supported by mget, and gather some links, when you are ready type them line by line beneath the shebang line.
+{{{
+ #!/usr/bin/mpkg -dCi
+ http://youtube...
+ http://youtube...
+ http://youtube...
+}}}
+when you are done just save the file as some_file.mpkg
+And that's it! Just be sure to have each movie link on a seperate line. You can skip the shebang line but it's not recommended. Also if you edit your file with notepad select File->Save As... from the menu and for the file name enter some_file.mpkg. If you don't provide the extensions the file will be saved as a plain .txt file and mget won't recognize it.
 = Windows =
 
 == Where are the files I downloaded? ==
