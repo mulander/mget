@@ -37,10 +37,68 @@ apt-get update && apt-get install mget
 
 ==Windows==
 
-Download [http://mget.googlecode.com/files/mget-1.17-win.exe windows installer].
+Visit the [http://movie-get.org/ project homepage]
 
+[http://gus.damnedangels.net/small.php?image=nuqbmget_1.png]
 
+Follow the link to download [http://www.ruby-lang.org/en/downloads/ ruby]
 
+[http://gus.damnedangels.net/small.php?image=i3b1mget_2.png]
 
+Download the [http://rubyforge.org/frs/download.php/29263/ruby186-26.exe ruby one-click installer]
 
+[http://gus.damnedangels.net/small.php?image=tkt2mget_3.png]
 
+Visit the [http://code.google.com/p/mget/downloads/list download section] on the [http://movie-get.org/ mget project homepage].
+
+[http://gus.damnedangels.net/small.php?image=x7s4mget_4.png]
+
+Download the [http://mget.googlecode.com/files/mget-1.20-win.exe windows installer for mget 1.20]
+
+[http://gus.damnedangels.net/small.php?image=dgebmget_5.png]
+
+Run the ruby installer and follow the on screen instructions.
+
+[http://gus.damnedangels.net/stuff/yerxmget_6.png]
+
+[http://gus.damnedangels.net/stuff/0bfamget_7.png]
+
+[http://gus.damnedangels.net/stuff/z07emget_8.png]
+
+[http://gus.damnedangels.net/stuff/x3osmget_9.png]
+
+[http://gus.damnedangels.net/stuff/ut5rmget_10.png]
+
+[http://gus.damnedangels.net/stuff/y55tmget_11.png]
+
+[http://gus.damnedangels.net/stuff/0td0mget_12.png]
+
+[http://gus.damnedangels.net/?id=show&image=zf0zmget_13.png]
+
+Now that we have ruby installed, run the mget windows installer.
+
+[http://gus.damnedangels.net/stuff/f216mget_14.png]
+
+[http://gus.damnedangels.net/stuff/fzw3mget_15.png]
+
+[http://gus.damnedangels.net/stuff/khb9mget_16.png]
+
+[http://gus.damnedangels.net/stuff/n5mmmget_17.png]
+
+Now, that we have mget installed we can ask defc0n for some media ;)
+
+[http://gus.damnedangels.net/stuff/9fcvmget_18.png]
+
+Defc0n send us a .mpkg file. This file is recognized by mget, so we can double click the file (or in case of google talk click open) and mget will know how to take care of it.
+
+A black console window will appear, you can see the download progress in it.
+
+[http://gus.damnedangels.net/stuff/ci1zmget_19.png]
+
+When it's done the files will be located in the same folder as your .mpkg file. In our case it's the Stage6 directory.
+
+[http://gus.damnedangels.net/stuff/t9jumget_20.png]
+
+You can run a .mpkg file by double clicking on it, or you can right click and select the desired action from the context menu.
+
+Have fun :)
