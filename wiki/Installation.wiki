@@ -73,7 +73,7 @@ Run the ruby installer and follow the on screen instructions.
 
 [http://gus.damnedangels.net/stuff/0td0mget_12.png]
 
-[http://gus.damnedangels.net/?id=show&image=zf0zmget_13.png]
+[http://gus.damnedangels.net/stuff/zf0zmget_13.png]
 
 Now that we have ruby installed, run the mget windows installer.
 
