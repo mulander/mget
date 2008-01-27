@@ -89,7 +89,7 @@ Now, that we have mget installed we can ask defc0n for some media ;)
 
 [http://gus.damnedangels.net/stuff/9fcvmget_18.png]
 
-Defc0n send us a .mpkg file. This file is recognized by mget, so we can double click the file (or in case of google talk click open) and mget will know how to take care of it.
+Defc0n send us a .mpkg file (you can download this example [http://code.google.com/p/mget/downloads/detail?name=RoadRunner.mpkg here]). This file is recognized by mget, so we can double click the file (or in case of google talk click open) and mget will know how to take care of it.
 
 A black console window will appear, you can see the download progress in it.
 
