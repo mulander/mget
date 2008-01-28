@@ -69,6 +69,7 @@ class Mget
 
   def target=(target)
     Mget.help() if target.nil?
+    target = target.gsub(/^mget/, 'http')
     if target.nil? || target !~ /^http:\/\//
       setWarning("Invalid url: #{ target }")
       Mget.help()
