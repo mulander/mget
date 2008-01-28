@@ -1,5 +1,5 @@
 !define PRODUCT_NAME "Ruby Movie Get"
-!define PRODUCT_VERSION "1.20"
+!define PRODUCT_VERSION "1.20.1"
 !define PRODUCT_WEB_SITE "http://movie-get.org/"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\mget.rb"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
@@ -80,8 +80,8 @@ LangString msg_uninstall ${LANG_ENGLISH} "Do you want to delete $(^Name) and all
 LangString msg_uninstall_ ${LANG_POLISH} "$(^Name) zosta³ pomyœlnie usuniêty."
 LangString msg_uninstall_ ${LANG_ENGLISH} "$(^Name) was successfully deleted."
 
-LangString msg_register ${LANG_POLISH} "Pobierz poprzez MGET"
-LangString msg_register2 ${LANG_POLISH} "Pobierz i konwertuj poprzez MGET"
+LangString msg_register ${LANG_POLISH} "Pobierz przez MGET"
+LangString msg_register2 ${LANG_POLISH} "Pobierz i konwertuj przez MGET"
 LangString msg_register ${LANG_ENGLISH} "Download with MGET"
 LangString msg_register2 ${LANG_ENGLISH} "Download and Convert with MGET"
 
@@ -113,6 +113,7 @@ Section "mget" SEC02
   SetOutPath "$PROGRAMFILES\mget\"
   SetOverwrite try
   File "..\mget.rb"
+  File "mget.bat"
   File "..\COPYING"
   File "..\docs\mget.html"
   File "..\gfx\mget.ico"
@@ -125,6 +126,16 @@ Section "mget" SEC02
   WriteRegStr HKCR "MPKG\shell" "" "download"
   WriteRegStr HKCR "MPKG\shell\convert" "" "$(msg_register2)"
   WriteRegStr HKCR "MPKG\shell\convert\command" "" 'C:\WINDOWS\system32\cmd.exe /c "C:\WINDOWS\mget.rb -dcri "%1""'
+
+  WriteRegStr HKCR "mget" "" "URL:Media Protocol"
+  WriteRegStr HKCR "mget" "Source Filter" "{6B6D0800-9ADA-11d0-A520-00A0D10129C0}"
+  WriteRegStr HKCR "mget" "Animation" "dxmasf.dll,150"
+  WriteRegStr HKCR "mget" "URL Protocol" ""
+  WriteRegStr HKCR "mget\DefaultIcon" "" "$PROGRAMFILES\mget\mget.ico"
+  WriteRegStr HKCR "mget\shell" "" "open"
+  WriteRegStr HKCR "mget\shell\open" "" ""
+  WriteRegStr HKCR "mget\shell\open\command" "" '"C:\Program Files\mget\mget.bat" "%L"'
+
 SectionEnd
 
 Section "lib" SEC03
@@ -182,15 +193,17 @@ Section Uninstall
   Delete "$PROGRAMFILES\mget\COPYING"
   Delete "$PROGRAMFILES\mget\mget.html"
   Delete "$PROGRAMFILES\mget\mget.rb"
+  Delete "$PROGRAMFILES\mget\mget.ico"
+  Delete "$PROGRAMFILES\mget\mget.bat"
   Delete "$WINDIR\wget.exe"
   Delete "$WINDIR\ffmpeg.exe"
   Delete "$WINDIR\mplayer.exe"
   Delete "$WINDIR\mget.rb"
-  Delete "$WINDIR\mget.ico"
-  Delete "$WINDIR\${PRODUCT_NAME}.url"
+    Delete "$WINDIR\${PRODUCT_NAME}.url"
 
   DeleteRegKey HKCR ".mpkg"
   DeleteRegKey HKCR "MPKG"
+  DeleteRegKey HKCR "mget"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
