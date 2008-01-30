@@ -53,7 +53,7 @@ Visit the [http://code.google.com/p/mget/downloads/list download section] on the
 
 [http://gus.damnedangels.net/small.php?image=x7s4mget_4.png]
 
-Download the [http://mget.googlecode.com/files/mget-1.20-win.exe windows installer for mget 1.20]
+Download the [http://mget.googlecode.com/files/mget-1.20.1-win.exe windows installer for mget 1.20]
 
 [http://gus.damnedangels.net/small.php?image=dgebmget_5.png]
 
