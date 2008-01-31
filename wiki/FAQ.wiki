@@ -35,5 +35,9 @@ Blank lines in the file will be ignored.
 
 Try searching in _C:\Program Files\mget\Downloads_. If you started your download using a .mpkg file then check in the same place where the .mpkg file is located.
 
+== How can I easily download a movie from one of the supported sites? ==
+
+Just visit the url in your browser. In example http://www.youtube.com/watch?v=xG_AjSFRNIw
+When you decide that You want this video downloaded then just change http:// to mget:// (mget://www.youtube.com/watch?v=xG_AjSFRNIw) in your browser address bar and hit enter. Your browser will tell you that it needs to open an external application to handle your request. The moment you agree to run mget.bat the download process will begin.
 
 = Linux =
