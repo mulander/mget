@@ -69,8 +69,34 @@ class Mget
 
   def target=(target)
     Mget.help() if target.nil?
-    target = target.gsub(/^mget/, 'http')
-    if target.nil? || target !~ /^http:\/\//
+    target = target.gsub(/^mget:\/\//, 'http://')
+	target = target.gsub(/^mpkg:\/\//, 'http://') # substitute mpkg:// with http:// if needed
+
+	if not @fromFile #  to avoid nesting in mpkg files and abuse reading other files on the drive
+	  # Maybe the target is a file but somone forgot to pass --input?
+      if File.exist?(target)
+        setTrace("#{target} is a file on local hdd. Switching to --input mode.")
+        self.input = target
+	    return
+      # Maybe the target points to a *.mpkg file and we
+      # should download it and process like with --input?
+      elsif target =~ /\/([^\/]*\.mpkg)$/ # $1 is the mpkg file name
+        setTrace("#{target} points to a .mpkg file. The file will be downloaded.")
+  
+        mpkg_name = $1 # remember the file name because further regex could clobber $1  
+  
+        setInfo("Downloading #{ mpkg_name }")  
+        mpkg = open(mpkg_name,"wb")
+        mpkg.write(open(target).read()) # save the mpkg file
+        mpkg.close()
+        setInfo("#{mpkg_name} downloaded. Switching to --input mode.")
+  
+        self.input = mpkg_name # set input to the downloaded mpkg file
+	    return
+      end
+	end
+
+    if target.nil? || target !~ /^http:\/\// || target =~ /\/[^\/]*\.mpkg$/
       setWarning("Invalid url: #{ target }")
       Mget.help()
       @target = nil

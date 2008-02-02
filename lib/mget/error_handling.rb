@@ -43,6 +43,11 @@ private
     puts @info
     @log.info(string)
   end
+
+  # trace script internals without disturbing the user
+  def setTrace(string)
+    @log.info(string)
+  end
   
   def logDir()
     path = './'
