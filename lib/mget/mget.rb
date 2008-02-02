@@ -20,6 +20,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 require 'mget/error_handling'
+require 'open-uri'
 
 class Mget
   VERSION = '1.20'
@@ -42,6 +43,8 @@ class Mget
     @converted  = 0
     @convertable= false
     @saveDir    = '.'
+	@fromFileValid = false # needed to check for mpkg:// and http://../*.mpkg when --input
+	@checkFromFile = false # are we checking file input right now?
 
     if ENV.has_key?('OS')
       @wget   = File.exists?(ENV['SystemRoot'] + '\wget.exe')
@@ -68,6 +71,7 @@ class Mget
   end
 
   def target=(target)
+    setTrace("target="+target)
     Mget.help() if target.nil?
     target = target.gsub(/^mget:\/\//, 'http://')
 	target = target.gsub(/^mpkg:\/\//, 'http://') # substitute mpkg:// with http:// if needed
@@ -76,6 +80,7 @@ class Mget
 	  # Maybe the target is a file but somone forgot to pass --input?
       if File.exist?(target)
         setTrace("#{target} is a file on local hdd. Switching to --input mode.")
+		@fromFileValid = true
         self.input = target
 	    return
       # Maybe the target points to a *.mpkg file and we
@@ -90,19 +95,22 @@ class Mget
         mpkg.write(open(target).read()) # save the mpkg file
         mpkg.close()
         setInfo("#{mpkg_name} downloaded. Switching to --input mode.")
-  
+        @fromFileValid = true
         self.input = mpkg_name # set input to the downloaded mpkg file
 	    return
       end
 	end
-
-    if target.nil? || target !~ /^http:\/\// || target =~ /\/[^\/]*\.mpkg$/
-      setWarning("Invalid url: #{ target }")
-      Mget.help()
-      @target = nil
-    else
-      @target = target
-    end
+    if @checkFromFile
+	  return
+	else
+      if target.nil? || target !~ /^http:\/\// || target =~ /\/[^\/]*\.mpkg$/
+        setWarning("Invalid url: #{ target }")
+        Mget.help()
+        @target = nil
+      else
+        @target = target
+      end
+	end
   end
 
   def download=(flag)
@@ -136,6 +144,14 @@ class Mget
   end
 
   def input=(fileName)
+    setTrace("input="+fileName)
+    if not @fromFileValid
+	  @checkFromFile = true
+	  setTrace("Sending to validate="+fileName)
+      self.target = fileName
+	  return
+	end
+	setTrace("File.exists?="+fileName)
     if File.exists? fileName
       if File.zero? fileName
         setError("File is empty: #{ fileName }")
@@ -145,6 +161,7 @@ class Mget
           setWarning("--name ignored because of --input")
           @name   = nil
         end
+		@checkFromFile = false
         @fromFile = true
         @input    = fileName
       end
@@ -198,6 +215,9 @@ Copyright (C) 2006 Adam Wolk "mulander" <netprobe@gmail.com>
   end
 
 private
+  def trace?()
+    return @@trace
+  end
 
   def stats()
     print "+","="*17,"+\n"

@@ -46,7 +46,9 @@ private
 
   # trace script internals without disturbing the user
   def setTrace(string)
-    @log.info(string)
+    if trace?
+      @log.info(string)
+	end
   end
   
   def logDir()
