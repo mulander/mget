@@ -23,7 +23,7 @@ class Patrz < MovieSite
   def get()
     text = `wget -O- "#{@url}"`
     text.each_line do |line|
-      if line =~ /<param name="movie" value="http:\/\/patrz.pl\/patrzplay\.noad\.swf\?file=(.+?)&amp;typ=1&amp;server=(.+?)" \/>/
+      if line =~ /patrz\.pl\/static\/flash\/patrzplay\.swf\?file=(.+?)&amp;typ=1&amp;server=(.+?)&/
         return "http://www" + $2 + ".patrz.pl/uplx/5flv/" + $1 + ".flv"
       end
     end
