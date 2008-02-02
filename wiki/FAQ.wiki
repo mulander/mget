@@ -3,6 +3,10 @@
 
 = Common =
 
+== Where can I get help? ==
+
+You can ask Your questions on our [http://groups.google.com/group/movie-get mailing list here].
+
 == What are .mpkg files? ==
 
 http://gus.damnedangels.net/stuff/vzcrmpkg.png
