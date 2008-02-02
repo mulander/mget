@@ -71,7 +71,7 @@ class Mget
   end
 
   def target=(target)
-    setTrace("target="+target)
+    setTrace("target="+target.to_s)
     Mget.help() if target.nil?
     target = target.gsub(/^mget:\/\//, 'http://')
 	target = target.gsub(/^mpkg:\/\//, 'http://') # substitute mpkg:// with http:// if needed
@@ -101,6 +101,7 @@ class Mget
       end
 	end
     if @checkFromFile
+	  setTrace("target= > @checkFromFile returning")
 	  return
 	else
       if target.nil? || target !~ /^http:\/\// || target =~ /\/[^\/]*\.mpkg$/
@@ -149,6 +150,13 @@ class Mget
 	  @checkFromFile = true
 	  setTrace("Sending to validate="+fileName)
       self.target = fileName
+	  if @fromFileValid
+	    setTrace("Validated #{fileName} is a mpkg file.")
+	  else
+	    setTrace("Validation of #{fileName} failed")
+		@fromFileValid = true # override settings
+		self.input=fileName   # force self check again, but without validation
+	  end
 	  return
 	end
 	setTrace("File.exists?="+fileName)
