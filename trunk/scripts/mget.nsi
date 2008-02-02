@@ -75,9 +75,9 @@ ${Index_RemoveFilesAndSubDirs}-done:
   !undef Index_RemoveFilesAndSubDirs
 !macroend
 
-LangString msg_uninstall ${LANG_POLISH} "Czy na pewno chcesz usun¹æ $(^Name) i wszystkie jego komponenty?"
+LangString msg_uninstall ${LANG_POLISH} "Czy na pewno chcesz usunÄ…Ä‡ $(^Name) i wszystkie jego komponenty?"
 LangString msg_uninstall ${LANG_ENGLISH} "Do you want to delete $(^Name) and all his components?"
-LangString msg_uninstall_ ${LANG_POLISH} "$(^Name) zosta³ pomyœlnie usuniêty."
+LangString msg_uninstall_ ${LANG_POLISH} "$(^Name) zostaÅ‚ pomyÅ›lnie usuniÄ™ty."
 LangString msg_uninstall_ ${LANG_ENGLISH} "$(^Name) was successfully deleted."
 
 LangString msg_register ${LANG_POLISH} "Pobierz przez MGET"
@@ -136,6 +136,12 @@ Section "mget" SEC02
   WriteRegStr HKCR "mget\shell\open" "" ""
   WriteRegStr HKCR "mget\shell\open\command" "" '"C:\Program Files\mget\mget.bat" "%L"'
 
+  FileOpen $4 "$APPDATA\Opera\Opera\profile\opera6.ini" a
+  FileSeek $4 0 END
+  FileWrite $4 "$\r$\n"
+  FileWrite $4 "mget=1,0,"
+  FileWrite $4 "$\r$\n"
+  FileClose $4
 SectionEnd
 
 Section "lib" SEC03
@@ -199,7 +205,7 @@ Section Uninstall
   Delete "$WINDIR\ffmpeg.exe"
   Delete "$WINDIR\mplayer.exe"
   Delete "$WINDIR\mget.rb"
-    Delete "$WINDIR\${PRODUCT_NAME}.url"
+  Delete "$WINDIR\${PRODUCT_NAME}.url"
 
   DeleteRegKey HKCR ".mpkg"
   DeleteRegKey HKCR "MPKG"
