@@ -24,6 +24,7 @@ require 'getoptlong'
 require 'mget/mget'
 
 module Config
+  @@trace    = false
   @@youtube = { 'username' => '', 'password' => '' }
 end
 
