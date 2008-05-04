@@ -1,8 +1,23 @@
 #labels Phase-Design
+*mget (1.20)*
+
+  * Fixed support for:
+    # Sevenload (issue #43);
+    # Stage6 (issue #48);
+    # YouTube (issue #43, #47);
+  * Fixed log path for MS Windows (issue #46);
+  * Fixed ffmpeg conversion (issue #45);
+  * Fixed function 'input' (issue #50);
+  * Added support for mpkg files (issue #51).
+
+_  -- defc0n 5.05.2008_
+
+
 *mget-qt (1.19.1)*
   * Fixed a bug where the application ignored all input entered by hand (issue #42)
 
 _  -- mulander 4.11.2007_
+
 
 *mget (1.19)* and *mget-qt (1.19.0)*
 
