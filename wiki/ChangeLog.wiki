@@ -4,7 +4,7 @@
   * Fixed support for:
     # Sevenload (issue #43);
     # Stage6 (issue #48);
-    # YouTube (issue #43, #47);
+    # YouTube (issue #43, issue #47);
   * Fixed log path for MS Windows (issue #46);
   * Fixed ffmpeg conversion (issue #45);
   * Fixed function 'input' (issue #50);
