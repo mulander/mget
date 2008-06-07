@@ -294,9 +294,6 @@ private
       when /porkolt/
         require 'mget/porkolt'
         movie = Porkolt.new(@target,nil)
-      when /stage6/
-        require 'mget/stage6'
-        movie = Stage6.new(@target,nil)
       when /collegehumor/
         require 'mget/collegehumor'
         movie = CollegeHumor.new(@target,nil)
