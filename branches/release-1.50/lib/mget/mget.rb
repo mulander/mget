@@ -23,7 +23,7 @@ require 'mget/error_handling'
 require 'open-uri'
 
 class Mget
-  VERSION = '1.20'
+  VERSION = '1.50'
   include ErrorHandling
   attr_writer :show, :quiet
   def initialize()
