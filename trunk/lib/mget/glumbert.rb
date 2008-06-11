@@ -22,6 +22,13 @@ require 'mget/movie_site'
 class Glumbert < MovieSite
     def get()
       name = @url.scan(/http:\/\/glumbert\.com\/media\/(.+?)$/).flatten
-      return "http://cdn.glumbert.com/video/flash/#{ name }.flv"
+      
+      open("http://glumbert.com/system/player2/app/c.php?a=#{name}") do |f|
+        f.each do |line|
+          if line =~ /<flv7>(.+?)<\/flv7>/
+            return $1
+          end
+        end
+      end
     end
 end

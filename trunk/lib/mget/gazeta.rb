@@ -21,10 +21,11 @@ require 'mget/movie_site'
 
 class Gazeta < MovieSite
   def get()
-    id = @url.scan(/http:\/\/wideo\.gazeta\.pl\/wideo\/.+?,.+?,(.+?)\.html$/).flatten
-    open("http://wideo.gazeta.pl/w?xx=#{ id }&v=2") do |f|
+    id = @url.scan(/\/\d+?,(\d+?),(\d+?)[\.,]/).flatten
+    
+    open("http://serwisy.gazeta.pl/getDaneWideo?xx=#{ id[1] }&xxd=#{ id[0]}") do |f|
       f.each_line do |line|
-        if line =~ /movieSRC=\'http:\/\/wideo\.gazeta\.pl\/control2\.swf\?plik=(http:\/\/video\.gazeta\.pl\/.+?\/.+?\/.+?)\&title=/
+        if line =~ /<p>(.+?)<\/p>/
           return $1
         end
       end
