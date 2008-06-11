@@ -312,6 +312,9 @@ private
       when /loadup/
         require 'mget/loadup'
         movie = LoadUp.new(@target,nil)
+      when /last/
+        require 'mget/lastfm'
+        movie = LastFM.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
@@ -380,7 +383,7 @@ private
     getName() if @name.nil? || @name.empty? || @fromFile
 
     if @mms
-      system("mplayer -dumpstream -dumpfile \"#{ @saveDir }/#{ @name + @suffix }\" \"#@target\"")
+      system("mplayer -dumpstream -dumpfile \"#{ @saveDir }/#{ @name + @suffix }\" -playlist \"#@target\"")
     else
       system("wget #{ flag }\"#{@target}\" -O \"#{ @saveDir }/#{ @name + @suffix}\"")
     end
