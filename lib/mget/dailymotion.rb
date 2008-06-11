@@ -23,13 +23,13 @@ class Dailymotion < MovieSite
   def get()
     open(@url) do |f|
       f.each_line do |line|
-        if line =~ /addVariable\("url"\, "(.+?)"\)\;/
+        if line =~ /addVariable\("video"\, "(.+?)%40%40/
             out = $1
             out.gsub!(/\%3A/, ":")
             out.gsub!(/\%2F/, "/")
             out.gsub!(/\%3F/, "?")
             out.gsub!(/\%3D/, "=")
-            return out
+            return 'http://dailymotion.com' + out
         end
       end
     end

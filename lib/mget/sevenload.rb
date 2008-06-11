@@ -22,11 +22,10 @@ require 'mget/movie_site'
 class Sevenload < MovieSite
     def get()
       id = @url.scan(/sevenload\.com\/videos\/(.+?)-|\/.+?/).flatten
-      id = "http://api.sevenload.com/api/player/id/" + id.to_s + "/"
 
-      open(id) do |f|
+      open("http://flash.sevenload.com/player?portalId=en&autoplay=1&itemId=#{id}&emvironment=sevenload") do |f|
         f.each_line do |line|
-          if line =~ /url="(.+?\.flv)"/
+          if line =~ /video url="(.+?\.flv)"/
             return $1
           end
         end

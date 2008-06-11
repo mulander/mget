@@ -312,7 +312,7 @@ private
       when /loadup/
         require 'mget/loadup'
         movie = LoadUp.new(@target,nil)
-      when /last/
+      when /last\.?fm/
         require 'mget/lastfm'
         movie = LastFM.new(@target,nil)
       else

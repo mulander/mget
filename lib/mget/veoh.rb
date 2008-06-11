@@ -21,10 +21,9 @@ require 'mget/movie_site'
 
 class Veoh < MovieSite
     def get()
-      id = @url.scan(/veoh\.com\/videos\/(.+?)\?/).flatten
-      id = "http://www.veoh.com/rest/video/" + id.to_s + "/details"
+      id = @url.scan(/veoh\.com\/videos\/(.+?)$/).flatten
 
-      open(id) do |f|
+      open("http://www.veoh.com/rest/v2/execute.xml?method=veoh.search.search&maxResults=1&type=video&permalink=#{id}&apiKey=5697781E-1C60-663B-FFD8-9B49D2B56D36") do |f|
         f.each_line do |line|
           if line =~ /fullPreviewHashPath="(.+?)"/
             return $1
