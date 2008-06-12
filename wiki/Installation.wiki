@@ -37,18 +37,6 @@ apt-get update && apt-get install mget
 
 ==Windows==
 
-Visit the [http://movie-get.org/ project homepage]
-
-[http://gus.damnedangels.net/small.php?image=nuqbmget_1.png]
-
-Follow the link to download [http://www.ruby-lang.org/en/downloads/ ruby]
-
-[http://gus.damnedangels.net/small.php?image=i3b1mget_2.png]
-
-Download the [http://rubyforge.org/frs/download.php/29263/ruby186-26.exe ruby one-click installer]
-
-[http://gus.damnedangels.net/small.php?image=tkt2mget_3.png]
-
 Visit the [http://code.google.com/p/mget/downloads/list download section] on the [http://movie-get.org/ mget project homepage].
 
 [http://gus.damnedangels.net/small.php?image=x7s4mget_4.png]
@@ -57,25 +45,7 @@ Download the [http://mget.googlecode.com/files/mget-1.20.1-win.exe windows insta
 
 [http://gus.damnedangels.net/small.php?image=dgebmget_5.png]
 
-Run the ruby installer and follow the on screen instructions.
-
-[http://gus.damnedangels.net/stuff/yerxmget_6.png]
-
-[http://gus.damnedangels.net/stuff/0bfamget_7.png]
-
-[http://gus.damnedangels.net/stuff/z07emget_8.png]
-
-[http://gus.damnedangels.net/stuff/x3osmget_9.png]
-
-[http://gus.damnedangels.net/stuff/ut5rmget_10.png]
-
-[http://gus.damnedangels.net/stuff/y55tmget_11.png]
-
-[http://gus.damnedangels.net/stuff/0td0mget_12.png]
-
-[http://gus.damnedangels.net/stuff/zf0zmget_13.png]
-
-Now that we have ruby installed, run the mget windows installer.
+Run the mget windows installer.
 
 [http://gus.damnedangels.net/stuff/f216mget_14.png]
 
