@@ -1,4 +1,25 @@
 #labels Phase-Design
+*mget (1.50)*
+  * Fixed support for:
+    # dailymotion.com (issue #62)
+    # gazeta.pl (issue #62)
+    # glumbert.com (issue #62)
+    # itvp.pl (issue #62)
+    # sevenload.com (issue #62)
+    # veoh.com (issue #62)
+    # patrz.pl (issue #53,issue #56,issue #57)
+    # smog.pl (issue #54)
+  * Removed support for:
+    # stage6.com (issue #61)
+    # loadup.ru (issue #63)
+    # czechtv (issue #63)
+  * Added support for:
+    # last.fm (issue #59)
+  * Ruby is no longer required on MS Windows (the installer contains all the required files)
+
+_  -- mulander, defc0n 12.06.2008_
+
+
 *mget (1.20)*
 
   * Fixed support for:
