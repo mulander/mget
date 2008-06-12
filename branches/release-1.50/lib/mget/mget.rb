@@ -297,9 +297,6 @@ private
       when /collegehumor/
         require 'mget/collegehumor'
         movie = CollegeHumor.new(@target,nil)
-      when /ceskatelevize/
-        require 'mget/czechtv'
-        movie = CzechTV.new(@target,nil)
       when /veoh/
         require 'mget/veoh'
         movie = Veoh.new(@target,nil)
@@ -309,9 +306,6 @@ private
       when /liveleak/
         require 'mget/liveleak'
         movie = LiveLeak.new(@target,nil)
-      when /loadup/
-        require 'mget/loadup'
-        movie = LoadUp.new(@target,nil)
       when /last\.?fm/
         require 'mget/lastfm'
         movie = LastFM.new(@target,nil)
