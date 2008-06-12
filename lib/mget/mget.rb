@@ -346,7 +346,7 @@ private
       f.seek(0)
       f.each_line do |line|
         next if line =~/^$/ or line =~ /^#/
-        self.target = line
+        self.target = line.strip
         next if @target.nil?
         printf "[*] %d/%d...\n", curr,@total
         getMovie()
