@@ -38,7 +38,7 @@ Blank lines in the file will be ignored.
 
 == Where are the files I downloaded? ==
 
-Try searching in _C:\Program Files\mget\Downloads_. If you started your download using a .mpkg file then check in the same place where the .mpkg file is located.
+Try searching in _C:\Program Files\mget\Downloads_ or _C:\Users\YOUR_USERNAME\Downloads_ on Windows Vista. If you started your download using a .mpkg file then check in the same place where the .mpkg file is located.
 
 == How can I easily download a movie from one of the supported sites? ==
 
