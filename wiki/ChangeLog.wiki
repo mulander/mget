@@ -14,7 +14,7 @@
     # loadup.ru (issue #63);
     # czechtv (issue #63);
   * Added support for:
-    # last.fm (issue #59);
+    # last.fm (mp3 and video) (issue #59);
   * Ruby is no longer required on MS Windows (the installer contains all the required files).
 
 _  -- mulander, defc0n 12.06.2008_
