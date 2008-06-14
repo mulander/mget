@@ -52,33 +52,54 @@ class LastFM < MovieSite
   end
   
   def getAudio()
-    setInfo("To use the LastFM module, you need at least 14 tracks on Your playlist!")
-    askAccountInfo() unless usernameSet? && passwordSet?
     @suffix = '.mp3'
     id = 0
     out = nil
-    
+
     open(@url) do |f|
       f.each do |line|
         id = $1 if line =~ /resourceID=(.+?)\&/
       end
     end
 
-    http = Net::HTTP.new('www.last.fm', 443)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    path = '/login/'
-    resp = http.get(path, nil)
+    if id == 0
+      setError("Track does not exist: #{ @url }")
+      exit
+    end
+    
+    def login
+      http = Net::HTTP.new('www.last.fm', 443)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      path = '/login/'
+      resp = http.get(path, nil)
+      cookie = resp['set-cookie']
+      
+      data = "username=#{@username}&password=#{@password}"
+      headers = {
+        'Cookie' => cookie,
+        'Content-Type' => 'application/x-www-form-urlencoded'
+      }
+      resp = http.post(path, data, headers)
+      
+      if resp['set-cookie'] == nil
+        @username = nil
+        @password = nil
+        setWarning("Invalid username or password")
+        return false
+      else
 
-    cookie = resp['set-cookie']
-    data = "username=#{@username}&password=#{@password}"
-    headers = {
-      'Cookie' => cookie,
-      'Content-Type' => 'application/x-www-form-urlencoded'
-    }
-    resp = http.post(path, data, headers)
+        @loggedIn = true
+        return resp['set-cookie'].scan(/Session=(.+?);/)
+      end
+    end
 
-    session = resp['set-cookie'].scan(/Session=(.+?);/)
+    setInfo("To use the LastFM module, you need at least 14 tracks on Your playlist!")
+
+    until loggedIn?
+      askAccountInfo() unless usernameSet? && passwordSet?
+      session = login
+    end
 
     http = Net::HTTP.new('www.last.fm', 80)
     path = "/user/#{@username}/playlist/"
@@ -93,7 +114,9 @@ class LastFM < MovieSite
 
     checked = 0
     stuff = Array.new
-    while(checked == 0)
+    while(checked != -1)
+      checked += 1
+      
       open("http://www.last.fm/flash_getplaylist.php?sk=#{session}") do |f|
         f.each do |line|
           stuff = CGI::unescape(Base64.decode64(line))
@@ -113,8 +136,13 @@ class LastFM < MovieSite
       stuff.each do |element|
         if element[0] == id
           out = element[1]
-          checked = 1
+          checked = -1
         end
+      end
+
+      if checked == 10
+        setError("Track not found. Check the number of tracks on Your playlist!")
+        exit
       end
     end
 
