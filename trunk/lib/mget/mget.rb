@@ -309,6 +309,9 @@ private
       when /last\.?fm/
         require 'mget/lastfm'
         movie = LastFM.new(@target,nil)
+      when /redtube\.com/
+        require 'mget/redtube'
+        movie = RedTube.new(@target,nil)
       else
         setError("Unsupported site: #{@target}")
         exit
