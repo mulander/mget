@@ -22,11 +22,7 @@ $LOAD_PATH.push('lib')
 
 require 'getoptlong'
 require 'mget/mget'
-
-module Config
-  @@trace    = false
-  @@youtube = { 'username' => '', 'password' => '' }
-end
+require 'mget/config'
 
 class Mget
   include Config
@@ -85,4 +81,6 @@ rescue GetoptLong::InvalidOption
 end
 mget.target = ARGV[0] unless mget.fromFile?
 
+mget.loadConfig()
 mget.run()
+mget.saveConfig()

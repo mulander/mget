@@ -43,9 +43,9 @@ class Mget
     @converted  = 0
     @convertable= false
     @saveDir    = '.'
-	@fromFileValid = false # needed to check for mpkg:// and http://../*.mpkg when --input
-	@checkFromFile = false # are we checking file input right now?
-
+    @fromFileValid = false # needed to check for mpkg:// and http://../*.mpkg when --input
+    @checkFromFile = false # are we checking file input right now?
+    
     if ENV.has_key?('OS')
       @wget   = File.exists?(ENV['SystemRoot'] + '\wget.exe')
       @ffmpeg = File.exists?(ENV['SystemRoot'] + '\ffmpeg.exe')
@@ -74,15 +74,15 @@ class Mget
     setTrace("target="+target.to_s)
     Mget.help() if target.nil?
     target = target.gsub(/^mget:\/\//, 'http://')
-	target = target.gsub(/^mpkg:\/\//, 'http://') # substitute mpkg:// with http:// if needed
+    target = target.gsub(/^mpkg:\/\//, 'http://') # substitute mpkg:// with http:// if needed
 
-	if not @fromFile #  to avoid nesting in mpkg files and abuse reading other files on the drive
+    if not @fromFile #  to avoid nesting in mpkg files and abuse reading other files on the drive
 	  # Maybe the target is a file but somone forgot to pass --input?
       if File.exist?(target)
         setTrace("#{target} is a file on local hdd. Switching to --input mode.")
-		@fromFileValid = true
+	@fromFileValid = true
         self.input = target
-	    return
+        return
       # Maybe the target points to a *.mpkg file and we
       # should download it and process like with --input?
       elsif target =~ /\/([^\/]*\.mpkg)$/ # $1 is the mpkg file name
@@ -99,11 +99,11 @@ class Mget
         self.input = mpkg_name # set input to the downloaded mpkg file
 	    return
       end
-	end
+    end
     if @checkFromFile
-	  setTrace("target= > @checkFromFile returning")
-	  return
-	else
+	setTrace("target= > @checkFromFile returning")
+	return
+    else
       if target.nil? || target !~ /^http:\/\// || target =~ /\/[^\/]*\.mpkg$/
         setWarning("Invalid url: #{ target }")
         Mget.help()
@@ -111,7 +111,7 @@ class Mget
       else
         @target = target
       end
-	end
+    end
   end
 
   def download=(flag)
@@ -147,19 +147,19 @@ class Mget
   def input=(fileName)
     setTrace("input="+fileName)
     if not @fromFileValid
-	  @checkFromFile = true
-	  setTrace("Sending to validate="+fileName)
+      @checkFromFile = true
+      setTrace("Sending to validate="+fileName)
       self.target = fileName
-	  if @fromFileValid
-	    setTrace("Validated #{fileName} is a mpkg file.")
-	  else
-	    setTrace("Validation of #{fileName} failed")
-		@fromFileValid = true # override settings
-		self.input=fileName   # force self check again, but without validation
-	  end
-	  return
-	end
-	setTrace("File.exists?="+fileName)
+      if @fromFileValid
+        setTrace("Validated #{fileName} is a mpkg file.")
+      else
+        setTrace("Validation of #{fileName} failed")
+        @fromFileValid = true # override settings
+        self.input=fileName   # force self check again, but without validation
+      end
+      return
+    end
+    setTrace("File.exists?="+fileName)
     if File.exists? fileName
       if File.zero? fileName
         setError("File is empty: #{ fileName }")
@@ -169,7 +169,7 @@ class Mget
           setWarning("--name ignored because of --input")
           @name   = nil
         end
-		@checkFromFile = false
+        @checkFromFile = false
         @fromFile = true
         @input    = fileName
       end
@@ -224,7 +224,7 @@ Copyright (C) 2006 Adam Wolk "mulander" <netprobe@gmail.com>
 
 private
   def trace?()
-    return @@trace
+    return @@config[:trace]
   end
 
   def stats()
@@ -242,7 +242,7 @@ private
     case @target
       when /youtube/
         require 'mget/youtube'
-        movie   = Youtube.new(@target, @@youtube)
+        movie   = Youtube.new(@target, true)
       when /metacafe/
         require 'mget/meta_cafe'
         movie   = MetaCafe.new(@target,nil)
@@ -308,7 +308,7 @@ private
         movie = LiveLeak.new(@target,nil)
       when /last\.?fm/
         require 'mget/lastfm'
-        movie = LastFM.new(@target,nil)
+        movie = LastFM.new(@target,true)
       when /redtube\.com/
         require 'mget/redtube'
         movie = RedTube.new(@target,nil)
