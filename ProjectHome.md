@@ -1,0 +1,3 @@
+**Movie Get** aims to be a simple console script allowing a user to download embeded movies from various video hosting services. It uses common nix programs to download the file and convert it from flv to avi format. The main work of mget is to get the direct video link, which it achieves with the help of the great ruby programming language.
+
+![http://gus.damnedangels.net/stuff/9fcvmget_18.png](http://gus.damnedangels.net/stuff/9fcvmget_18.png)
